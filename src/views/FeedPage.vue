@@ -1,14 +1,20 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-grid>
+      <ion-grid style="background-color: #ffffff;">
         <ion-row>
           <ion-col class="desktop-col" size="3.5"></ion-col>
           <ion-col>
-              <ion-col size="2" v-for="photo in photos" :key="photo">
+            
+            <p>{{ message }}</p>
+            
+            <ion-button id="open-modal" expand="block" @click="openModal" style="margin-top: 15%;">Open Modal</ion-button>
+            
+            <PostModal/>
+             <ion-col size="2" v-for="photo in photos" :key="photo">
                 
-                <ion-card @click="showActionSheet(photo)">
-                  <ion-item>
+                <ion-card @click="showActionSheet(photo)" style="background-color: #18604a; border: 1px solid #257157;">
+                  <ion-item style="margin: 5px; --background: #18604a; border: 1px solid #18604a;">
                     <ion-avatar slot="start">
                       <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                     </ion-avatar>
@@ -20,14 +26,15 @@
 
                     <IonIcon :icon="ellipsisVertical" slot="end"></IonIcon>
                   </ion-item>
-                  <ion-img :src="photo.webviewPath" class="cropped-image"></ion-img>
+                  <ion-img :src="photo.webviewPath" class="cropped-image" style="border: 2px solid #257157; border-radius: 5px;"> </ion-img>
                   <ion-card-content>
                     <ion-row>
-                      <ion-label><b>Leírás:</b></ion-label>
-                      <ion-label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ion-label>
+                      <ion-label style="color: #ffffff;"><b>Leírás:</b></ion-label>
+                      <ion-label style="color: #ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ion-label>
                     </ion-row>
                   </ion-card-content>
                 </ion-card>
+               
               </ion-col>
             </ion-col>
           <ion-col class="desktop-col" size="3.35"></ion-col>
@@ -60,14 +67,23 @@ import {
   IonTitle,
   IonToolbar,
   IonCard, 
-  IonCardContent
+  IonCardContent,
+  IonModal,
+  IonButton
 } from '@ionic/vue';
 import { camera, trash, close, radioButtonOffOutline, addOutline, ellipsisVertical } from 'ionicons/icons';
 import { usePhotoGallery, UserPhoto } from '@/composables/usePhotoGallery';
-
-
+import PostModal from '@/components/PostModal.vue';
+import { ref } from 'vue';
 
 const { photos, takePhoto, deletePhoto } = usePhotoGallery();
+
+const message = ref('');
+
+const openModal = () => {
+    // Access the modal component and trigger it
+    PostModal.proxy.$refs.modal.present();
+  };
 
 const showActionSheet = async (photo: UserPhoto) => {
   const actionSheet = await actionSheetController.create({
@@ -93,6 +109,11 @@ const showActionSheet = async (photo: UserPhoto) => {
   });
   await actionSheet.present();
 };
+
+
+
+
+
 </script>
 
 <style scoped>
@@ -112,10 +133,12 @@ ion-col {
   padding-right: 30%;
 }
 
-@media (max-width: 840px) {
+@media (max-width: 765px) {
 
 
-
+.desktop-col{
+  display: none;
+}
 
 
 
@@ -127,8 +150,10 @@ ion-tab-button {
 
 }
 
-@media (max-width: 640px) {
+@media (max-width: 765px) {
   
 }
+
+
 
 </style>

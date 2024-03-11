@@ -3,56 +3,56 @@
     <ion-header>
       
       <ion-toolbar>
-        <ion-grid>
-          <ion-row>
+        <ion-grid style="background-color: #18604a;">
+          <ion-row >
             <ion-col class="side-col">
               <ion-buttons>
-                <ion-button>
-                  <ion-icon :icon="cogOutline"/>
+                <ion-button >
+                  <ion-icon :icon="cogOutline" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
 
-            <ion-col></ion-col>
+            <ion-col size="3.2"></ion-col>
             
 
             <ion-col  size="0.9" class="desktop-header">
               <ion-buttons class="ion-horizontal-padding" >
                 <ion-button href="/tabs/info">
-                  <ion-icon :icon="bookOutline"/>
+                  <ion-icon :icon="bookOutline" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
             <ion-col  size="0.9" class="desktop-header">
               <ion-buttons class="ion-horizontal-padding">
                 <ion-button href="/tabs/events">
-                  <ion-icon :icon="megaphoneOutline" size="1"/>
+                  <ion-icon :icon="megaphoneOutline" size="1" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
             <ion-col size="1" class="desktop-header">
               <ion-buttons class="ion-horizontal-padding">
                 <ion-button href="/tabs/feed">
-                  <ion-icon :icon="homeOutline"/>
+                  <ion-icon :icon="homeOutline" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
             <ion-col  size="0.9" class="desktop-header">
               <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/map">
-                  <ion-icon :icon="mapOutline"/>
+                <ion-button href="/tabs/map" >
+                  <ion-icon :icon="mapOutline" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
-            <ion-col  size="0.9" class="desktop-header">
+            <ion-col  size="1" class="desktop-header">
               <ion-buttons class="ion-horizontal-padding" >
                 <ion-button href="/tabs/calendar">
-                  <ion-icon :icon="calendarOutline"/>
+                  <ion-icon :icon="calendarOutline" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
 
-            <ion-col></ion-col>
+            <ion-col ></ion-col>
             
             <ion-col class="side-col">
               <ion-buttons>
@@ -62,7 +62,7 @@
                       <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                     </ion-avatar>
                 </ion-item>-->
-                <ion-icon :icon="personOutline"/>
+                <ion-icon :icon="personOutline" class="header-icon"/>
                 </ion-button>
               </ion-buttons>
             </ion-col>
@@ -78,8 +78,8 @@
 
     <ion-tabs >
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom" class="mobile-tab-bar">
-        <ion-tab-button tab="info" href="/tabs/info">
+      <ion-tab-bar slot="bottom" class="mobile-tab-bar" style="background-color: #18604a;">
+        <ion-tab-button tab="info" href="/tabs/info" >
           <ion-icon :icon="bookOutline" />
           <ion-label>Info</ion-label>
         </ion-tab-button>
@@ -128,6 +128,8 @@ ion-grid{
 
 ion-tab-button{
 font-size: 9px;
+background-color: #18604a;
+color: white;
 }
 
 
@@ -152,6 +154,10 @@ font-size: 9px;
   .desktop-header{
     display: none;
   }
+}
+
+.header-icon{
+  color: white;
 }
 
 
