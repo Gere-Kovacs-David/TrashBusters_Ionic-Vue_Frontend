@@ -1,58 +1,73 @@
 <template>
-    <ion-page>
-      
-      <ion-grid>
-        
-        <ion-row>
-          <ion-col size="auto"></ion-col>
-          <ion-col>
-            <ion-datetime color="rose" max-width="300"></ion-datetime>
-          </ion-col>
-          <ion-col size="auto"></ion-col>
-        </ion-row>
-      </ion-grid>
-      
-    </ion-page>
-  </template>
-  
-  <script setup lang="ts">
-  import { IonPage, IonHeader, IonToolbar, IonTitle, IonDatetime  } from '@ionic/vue';
-  
-  </script>
-  
-  <style>
-  :root {
-    --ion-color-rose: green;
-    --ion-color-rose-rgb: 255, 255, 255;
-    --ion-color-rose-contrast: #ffffff;
-    --ion-color-rose-contrast-rgb: 255, 255, 255;
-    --ion-color-rose-shade: #34951e;
-    --ion-color-rose-tint: #2a9515;
-
-    --ion-text-color: #881337;
-    --ion-text-color-rgb: 136, 19, 55;
-
+  <ion-page style="background-color: white;">
     
-  }
+      <div class="calendar">
+        <ScheduleXCalendar :calendar-app="calendarApp">
+          <template #timeGridEvent="{ calendarEvent }">
+      <div class="event">
+        {{ calendarEvent.title }}
+      </div>
+    </template>
+  </ScheduleXCalendar>
+      </div>
+    
+  </ion-page>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { IonPage } from '@ionic/vue';
+import { ScheduleXCalendar } from '@schedule-x/vue';
+import {
+  createCalendar,
+  viewDay,
+  viewWeek,
+  viewMonthGrid,
+  viewMonthAgenda,
+} from '@schedule-x/calendar';
 
-  .ion-color-rose {
-    --ion-color-base: var(--ion-color-rose);
-    --ion-color-base-rgb: var(--ion-color-rose-rgb);
-    --ion-color-contrast: var(--ion-color-rose-contrast);
-    --ion-color-contrast-rgb: var(--ion-color-rose-contrast-rgb);
-    --ion-color-shade: var(--ion-color-rose-shade);
-    --ion-color-tint: var(--ion-color-rose-tint);
-  }
+import '@schedule-x/theme-default/dist/index.css';
+/*import { createScrollControllerPlugin } from '@schedule-x/scroll-controller'
 
-  ion-datetime {
-    --background: black;
-    --background-rgb: 255, 241, 242;
+const scrollController = createScrollControllerPlugin({
+  initialScroll: '07:50'
+})*/
 
-    border-radius: 16px;
-    box-shadow: rgba(var(--ion-color-rose-rgb), 0.3) 0px 10px 15px -3px;
-    margin-top: 15px;
-  }
-
+const calendarApp = createCalendar({
+  selectedDate: '2023-12-19',
+  views: [viewDay, viewWeek, viewMonthGrid, viewMonthAgenda],
+  defaultView: viewMonthGrid.name,
+  events: [
+    {
+      id: 1,
+      title: 'Event 1',
+      start: '2023-12-19',
+      end: '2023-12-22',
+    },
+    {
+      id: 2,
+      title: 'Event 2',
+      start: '2023-12-20 12:00',
+      end: '2023-12-20 13:00',
+    },
+    {
+      id: 3,
+      title: 'Event 3',
+      start: '2023-12-19',
+      end: '2023-12-21',
+    },
+    
+  ],
+  //plugins: [scrollController]
+});
+/*scrollController.scrollTo('04:00')
+overflow-x:hidden;
+ overflow-y:scroll;*/
+</script>
+<style>
+.calendar{
+  margin:90px 30px 30px 30px;
   
+}
 
 </style>
+

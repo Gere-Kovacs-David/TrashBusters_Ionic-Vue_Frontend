@@ -1,11 +1,36 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabsPage from '../views/TabsPage.vue';
+import LoginComponent from '@/components/LoginComponent.vue';
+import RegisterComponent from '@/components/RegisterComponent.vue';
+import LandingPage from '../views/LandingPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/feed',
+    redirect: '/landing',
+  },
+  {
+    path: '/landing',
+    component: LandingPage,
+    children: [
+      {
+      path: 'login',
+      component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        },
+    ]
+  },
+  {
+    path: '/landing/login',
+    component: LoginComponent,
+  },
+  {
+    path: '/landing/login',
+    component: RegisterComponent,
   },
   {
     path: '/tabs/',
@@ -31,10 +56,22 @@ const routes: Array<RouteRecordRaw> = [
         path: 'map',
         component: () => import('@/views/MapPage.vue'),
       },
+      
       {
         path: 'calendar',
         component: () => import('@/views/CalendarPage.vue'),
       },
+
+      {
+        path: 'profile',
+        component: () => import('@/views/ProfilePage.vue'),
+      },
+
+      {
+        path: 'postmodal',
+        component: () => import('@/components/PostModal.vue'),
+      },
+      
 
     ],
   },

@@ -1,79 +1,102 @@
 <template>
-  <ion-page>
-    <ion-header>
+  <ion-menu content-id="main-content" >
+    
+    <ion-header class="mobile-header">
+      <ion-grid style="background-color: #186049;" class="menu-header mobile-header">
+      <ion-toolbar color="#186049" ><ion-title style="background-color: #186049;">Információk</ion-title></ion-toolbar>
+      </ion-grid>
+    </ion-header>
+    <ion-content>
+    <ion-list style="background-color: white;">
+        <ion-menu-toggle autoHide="false" color="#e4d5c7">
+          <ion-item color="#e4d5c7" href="/tabs/calendar">
+            <ion-icon slot="start" :icon="peopleOutline" color="#95877a"></ion-icon>
+            <ion-label color="#95877a">
+              Felhasználók
+            </ion-label>
+          </ion-item>
+          <ion-item color="#e4d5c7" href="/tabs/feed">
+            <ion-icon slot="start" :icon="trashBinOutline" color="#95877a"></ion-icon>
+            <ion-label color="#95877a">
+              Lerakók
+            </ion-label>
+          </ion-item>
+         
+      </ion-menu-toggle>
+    </ion-list>
       
-      <ion-toolbar>
-        <ion-grid style="background-color: #18604a;">
+    </ion-content>
+    
+  </ion-menu>
+
+  <ion-page id="main-content">
+    <ion-header class="mobile-header">
+      
+      <ion-toolbar class="mobile-header">
+        <ion-grid style="background-color: #186049;">
           <ion-row >
             <ion-col class="side-col">
               <ion-buttons>
-                <ion-button >
-                  <ion-icon :icon="cogOutline" class="header-icon"/>
-                </ion-button>
+                <ion-menu-toggle>
+                  <ion-segment v-model="segment" color="transparent">
+                    <ion-segment-button value="info" style="margin-left: -25px;">
+                      <ion-icon :icon="menuOutline" class="header-icon mobile-header-segment"/>
+                      <!--<label style="font-size: 10px;">Info</label>-->
+                    </ion-segment-button>
+                  </ion-segment>
+                </ion-menu-toggle>
+                
               </ion-buttons>
             </ion-col>
 
-            <ion-col size="3.2"></ion-col>
-            
-
-            <ion-col  size="0.9" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding" >
-                <ion-button href="/tabs/info">
+            <ion-col></ion-col>
+            <ion-col class="desktop-header">
+              <ion-segment v-model="segment" color="dark">
+                <ion-segment-button value="info" @click="goTo('/tabs/info')">
                   <ion-icon :icon="bookOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-            <ion-col  size="0.9" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/events">
-                  <ion-icon :icon="megaphoneOutline" size="1" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-            <ion-col size="1" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/feed">
+                  <!--<label style="font-size: 10px;">Info</label>-->
+                </ion-segment-button>
+                <ion-segment-button value="events" @click="goTo('/tabs/events')">
+                  <ion-icon :icon="megaphoneOutline" class="header-icon"/>
+                  <!--<label style="font-size: 10px;">Események</label>-->
+                </ion-segment-button>
+                <ion-segment-button value="feed" @click="goTo('/tabs/feed')">
                   <ion-icon :icon="homeOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-            <ion-col  size="0.9" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/map" >
+                  <!--<label style="font-size: 10px;">Főoldal</label>-->
+                </ion-segment-button>
+                <ion-segment-button value="map" @click="goTo('/tabs/map')">
                   <ion-icon :icon="mapOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>
+                  <!--<label style="font-size: 10px;">Térkép</label>-->
+                </ion-segment-button>
+                <ion-segment-button value="calendar"  @click="goTo('/tabs/calendar')">
+                  <ion-icon :icon="calendarOutline" class="header-icon "/>
+                  <!--<label style="font-size: 10px;">Naptár</label>-->
+                </ion-segment-button>
+              </ion-segment>
             </ion-col>
-            <ion-col  size="1" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding" >
-                <ion-button href="/tabs/calendar">
-                  <ion-icon :icon="calendarOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
+
+            
+           
 
             <ion-col ></ion-col>
             
             <ion-col class="side-col">
               <ion-buttons>
-                <ion-button>
-                  <!--<ion-item>
-                    <ion-avatar width="auto">
-                      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-                    </ion-avatar>
-                </ion-item>-->
-                <ion-icon :icon="personOutline" class="header-icon"/>
-                </ion-button>
+                <ion-segment v-model="segment" color="transparent">
+                    <ion-segment-button value="profile" @click="goTo('/tabs/profile')">
+                      <ion-icon :icon="personOutline" class="header-icon mobile-header-segment"/>
+                      <!--<label style="font-size: 10px;">Info</label>-->
+                    </ion-segment-button>
+                  </ion-segment>
               </ion-buttons>
             </ion-col>
           </ion-row>
         </ion-grid>
-
-        
-
       </ion-toolbar>
    
     </ion-header>
+
+  
 
 
     <ion-tabs >
@@ -107,28 +130,36 @@
 </template>
 
 <script setup lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, cogOutline, personOutline } from 'ionicons/icons';
+import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonItem } from '@ionic/vue';
+import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, cogOutline, personOutline, menuOutline, trashBinOutline, peopleOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 
+import  router  from '@/router';
 
+const segment = ref<string>('feed');
 
+const goTo = (path: string) => {
+  router.push(path);
+};
+
+// This function can be used to switch between different segments
+const switchSegment = (segmentValue: string) => {
+  segment.value = segmentValue; // Update the segment value
+};
 </script>
 
 <style>
 
 ion-grid{
-  border: 1px solid;
+  border: 1px solid transparent;
   ion-col{
-    border: 1px solid;
+    border: 1px solid transparent;
   }
-
-  
 }
 
 ion-tab-button{
 font-size: 9px;
-background-color: #18604a;
+background-color: #186049;
 color: white;
 }
 
@@ -154,11 +185,82 @@ color: white;
   .desktop-header{
     display: none;
   }
+  .mobile-header{
+    max-height: 50px;
+    
+    
+  }
+  .mobile-header-segment{
+      margin-top: -10px;
+    }
 }
 
 .header-icon{
   color: white;
 }
 
+.menu-header{
+  height: 80px;
+}
+ion-content {
+    --ion-background-color: #ffffff; /* Change the background color */
+}
 
+ion-item {
+    --ion-background:#ffffff ;
+    --color: #95877a;
+
+    /*--border-color: #fff;
+    --border-style: dashed;
+    --border-width: 2px;*/
+
+    --border-radius: 0px 20px 0px 20px;
+
+    --ripple-color: #e4d5c7;
+
+    --detail-icon-color: white;
+    --detail-icon-opacity: 1;
+    --detail-icon-font-size: 20px;
+  }
 </style>
+
+ <!--<ion-col  size="0.9" class="desktop-header">
+              <ion-buttons class="ion-horizontal-padding" >
+                <ion-button href="/tabs/info">
+                  <ion-icon :icon="bookOutline" class="header-icon"/>
+                </ion-button>
+              </ion-buttons>-->
+              <!--<label style="margin: 25px; font-size: 9px" >Tananyag</label>-->
+            <!--</ion-col>
+            <ion-col  size="0.9" class="desktop-header">
+              <ion-buttons class="ion-horizontal-padding">
+                <ion-button href="/tabs/events">
+                  <ion-icon :icon="megaphoneOutline" size="1" class="header-icon"/>
+                </ion-button>
+              </ion-buttons>-->
+              <!--<label style="margin: 25px; font-size: 9px" >Tananyag</label>-->
+            <!--</ion-col>
+            <ion-col size="1" class="desktop-header">
+              <ion-buttons class="ion-horizontal-padding">
+                <ion-button href="/tabs/feed">
+                  <ion-icon :icon="homeOutline" class="header-icon"/>
+                </ion-button>
+              </ion-buttons>-->
+              <!--<label style="margin: 30px; font-size: 9px">Tananyag</label>-->
+            <!--</ion-col>
+            <ion-col  size="0.9" class="desktop-header">
+              <ion-buttons class="ion-horizontal-padding">
+                <ion-button href="/tabs/map" >
+                  <ion-icon :icon="mapOutline" class="header-icon"/>
+                </ion-button>
+              </ion-buttons>-->
+              <!--<label style="margin: 25px; font-size: 9px" >Tananyag</label>-->
+            <!--</ion-col>
+            <ion-col  size="0.8" class="desktop-header">
+              <ion-buttons class="ion-horizontal-padding" >
+                <ion-button href="/tabs/calendar">
+                  <ion-icon :icon="calendarOutline" class="header-icon"/>
+                </ion-button>
+              </ion-buttons>-->
+              <!--<label style="margin: 25px; font-size: 9px" >Naptár</label>-->
+            <!--</ion-col>-->

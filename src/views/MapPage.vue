@@ -22,5 +22,7 @@
   </script>
   
   <style scoped>
-  
+  ion-content {
+    --ion-background-color: #ffffff; /* Change the background color */
+  }
   </style>
