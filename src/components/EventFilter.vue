@@ -1,6 +1,6 @@
 <template>
     <ion-page style="overflow: hidden;">
-      <ion-content class="ion-padding" style="overflow-y: hidden; height: 650px;">
+      <!--<ion-content class="ion-padding" style="overflow-y: hidden; height: 650px;">
         <ion-card class="search-card" style="margin: auto; border: white; box-shadow: none;">
           <ion-card-header >
                 <ion-card-title class="title" style="border: 1px solid white; margin: auto; margin-bottom: 15px; text-align: center;">Események szűrése</ion-card-title>
@@ -36,7 +36,7 @@
           </ion-card-content>
         </ion-card>
 
-      </ion-content>
+      </ion-content>-->
       
     </ion-page>
   </template>

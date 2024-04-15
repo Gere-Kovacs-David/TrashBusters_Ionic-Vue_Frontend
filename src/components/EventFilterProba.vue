@@ -212,7 +212,7 @@
     </ion-toolbar>
    </ion-footer>
   </ion-modal>
-<ion-modal class="floating-modal" style="height: auto; margin-top: 0px; background-color: transparent;" v-if="createmodalVisible">
+<ion-modal class="floating-modal" style="height: auto; width: auto; margin-top: 0px; background-color: transparent;" v-if="createmodalVisible">
     <div class="ion-justify-content-center ion-align-items-center">
           <ion-card style="border-radius: 15px; height: auto; ">
             <ion-header>

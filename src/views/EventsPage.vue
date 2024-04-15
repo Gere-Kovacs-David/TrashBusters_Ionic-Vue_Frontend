@@ -28,7 +28,7 @@ import { IonPage, IonContent, IonRow, IonButton } from '@ionic/vue';
 import { addOutline } from 'ionicons/icons';
 import CreateEvent from '@/components/CreateEvent.vue';
 import EventFilterProba from "../components/EventFilterProba.vue";
-import EventFilter from "../components/EventFilter.vue";
+//import EventFilter from "../components/EventFilter.vue";
 import { modalController } from '@ionic/vue';
 
 const openModal = async () => {
