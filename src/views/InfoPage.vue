@@ -7,9 +7,12 @@
           
           <ion-row>
             
-            <ion-col style="height: 500px;">
+            <ion-col  style="height: 500px; width: 500px;">
               <EventFilter/>
              
+            </ion-col>
+            <ion-col size="8">
+
             </ion-col>
             
       </ion-row>
@@ -18,10 +21,10 @@
     </ion-page>
   </template>
   
-  <script setup lang="ts">
-  import { IonPage, IonHeader, IonToolbar, IonContent, IonRow } from '@ionic/vue';
-  import EventFilter from "../components/EventFilter.vue";
-  import { modalController } from '@ionic/vue';
+ <script setup lang="ts">
+  import { IonPage, IonContent, IonRow } from '@ionic/vue';
+  import EventFilter from "@/EventFilter.vue";
+  
   </script>
   
   <style scoped>
@@ -51,3 +54,4 @@ ion-modal{
   --overflow: hidden;
 }
   </style>
+  

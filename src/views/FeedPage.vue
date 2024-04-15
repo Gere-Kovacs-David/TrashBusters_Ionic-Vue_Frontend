@@ -1,17 +1,13 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title></ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-grid >
+    
+    <ion-content class="ion-padding" >
+      <ion-grid style="margin-top: 50px;">
         <ion-row>
           <ion-col ></ion-col>
           <ion-col >
             <ion-button expand="block" @click="openModal">Bejegyzés létrehozása</ion-button>
-            <!--<p>{{ message }}</p>-->
+            <!--<p>{{ message }}</p> -->
           </ion-col>
           <ion-col ></ion-col>
           
@@ -24,11 +20,11 @@
 </template>
 
 <script lang="ts">
-  import { IonButton, IonContent, IonPage, IonHeader, IonToolbar, IonTitle, modalController } from '@ionic/vue';
+  import { IonButton, IonContent, IonPage, modalController } from '@ionic/vue';
   import Modal from '@/components/PostModal.vue';
 
   export default {
-    components: { IonButton, IonContent, IonPage, IonHeader, IonToolbar, IonTitle },
+    components: { IonButton, IonContent, IonPage },
     data() { // Specify the return type of the data function
       return {
         message: '' as string, // Explicitly declare the message property

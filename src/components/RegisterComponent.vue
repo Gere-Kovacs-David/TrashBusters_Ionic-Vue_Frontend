@@ -6,11 +6,11 @@
           <ion-card-content >
             <!--<ion-card-title>Regisztráció</ion-card-title>-->
 
-            <form @submit.prevent="register">
+            <form @submit="register">
              
               <ion-list>
                   <ion-item style="margin-top: 0px;">
-                      <ion-label position="floating">Email</ion-label>
+                      <ion-label position="floating">Email cím</ion-label>
                       <ion-input
                       clearInput
                       :value="email"
@@ -91,9 +91,9 @@
 </template>
 
 <script lang="ts">
-  import { IonInput, IonItem, IonList, IonCard, IonButton, IonCardContent } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+  //import useAuth from "src/composables/useAuth";
 
   const client = axios.create({
   baseURL: 'http://127.0.0.1:8000', // Update baseURL to match your backend server URL
@@ -133,6 +133,9 @@
             };
             console.log('Request Data:', data);
             const response: AxiosResponse = await client.post('/api/auth/register', data, config);
+
+            //useAuth.isLoggedIn.value == true;
+
             console.log(response.status);
             console.log(response.data);
             // Handle successful login here, e.g., redirect to another page
@@ -144,6 +147,14 @@
         }
       }
     },
+    clearInputFields() {
+      // Reset input field values
+      this.email = '';
+      this.username = '';
+      this.city = '';
+      this.password = '';
+      this.passwordAgain = '';
+    }
   },
   });
 

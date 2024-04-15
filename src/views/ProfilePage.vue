@@ -30,7 +30,7 @@
   </template>
   
   <script setup lang="ts">
-  import { IonPage, IonHeader, IonToolbar, IonContent, IonRow } from '@ionic/vue';
+  import { IonPage, IonContent, IonRow } from '@ionic/vue';
   
   
   </script>

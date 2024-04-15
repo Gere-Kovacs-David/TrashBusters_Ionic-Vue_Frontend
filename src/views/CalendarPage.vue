@@ -1,16 +1,16 @@
 <template>
   <ion-page style="background-color: white;">
-    
-      <div class="calendar">
+    <ion-card class="calendar">
+      <div >
         <ScheduleXCalendar :calendar-app="calendarApp">
-          <template #timeGridEvent="{ calendarEvent }">
-      <div class="event">
-        {{ calendarEvent.title }}
+          <template #timeGridEvent="{ calendarEvent }" >
+          <div class="event">
+            {{ calendarEvent.title }}
+          </div>
+          </template>
+        </ScheduleXCalendar>
       </div>
-    </template>
-  </ScheduleXCalendar>
-      </div>
-    
+    </ion-card>
   </ion-page>
 </template>
 <script setup lang="ts">
@@ -33,7 +33,7 @@ const scrollController = createScrollControllerPlugin({
 })*/
 
 const calendarApp = createCalendar({
-  selectedDate: '2023-12-19',
+  selectedDate: '2024-04-15',
   views: [viewDay, viewWeek, viewMonthGrid, viewMonthAgenda],
   defaultView: viewMonthGrid.name,
   events: [
@@ -45,9 +45,9 @@ const calendarApp = createCalendar({
     },
     {
       id: 2,
-      title: 'Event 2',
+      title: 'Event 1',
       start: '2023-12-20 12:00',
-      end: '2023-12-20 13:00',
+      end: '2023-12-20 14:00',
     },
     {
       id: 3,
@@ -55,18 +55,16 @@ const calendarApp = createCalendar({
       start: '2023-12-19',
       end: '2023-12-21',
     },
-    
   ],
   //plugins: [scrollController]
 });
-/*scrollController.scrollTo('04:00')
-overflow-x:hidden;
- overflow-y:scroll;*/
+
 </script>
 <style>
 .calendar{
   margin:90px 30px 30px 30px;
-  
+ overflow-x:hidden;
+ overflow-y:scroll;
 }
 
 </style>

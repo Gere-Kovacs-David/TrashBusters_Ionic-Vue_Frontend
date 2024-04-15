@@ -1,28 +1,22 @@
 <template>
     <ion-page>
-      <ion-content class="ion-padding no-scroll">
+      <ion-content class="ion-padding no-scroll" >
         <div class="ion-justify-content-center ion-align-items-center">
-          <ion-card >
+          <ion-card class="login-card" v-if="!forgotPassword">
             <ion-card-content >
-              <!--<ion-card-title>Bejelentkezés</ion-card-title>-->
-
               <form @submit.prevent="login">
-               
                 <ion-list>
                     <ion-item style="margin-top: 0px;">
-                        <ion-label position="floating">Email</ion-label>
+                        <ion-label position="floating">Email cím</ion-label>
                         <ion-input
                         clearInput
                         fill="outline"
                         :value="email"
                         @ionInput="email = $event.target.value;"
                         type="email"
-                        label="Email:"
                         counter="true"
-                        maxlength="20"
                         helper-text="Enter an email"
                         error-text="Please enter a valid email"
-                        
                         ></ion-input>
                       </ion-item>
                     <ion-item>
@@ -34,7 +28,6 @@
                         clearInput
                         fill="outline"
                         counter="true"
-                        maxlength="20"
                         helper-text="Enter a password"
                         error-text="Please enter a valid password"
                         ></ion-input>
@@ -42,24 +35,50 @@
                 </ion-list>
                 <ion-button expand="block" type="submit">Bejelentkezés</ion-button>
             </form>
-              <!--<p >{{ email }}</p>
-              <p >{{ password }}</p>-->
                 <p v-if="error">{{ error }}</p>
             </ion-card-content>
           </ion-card>
-        
-          <p class="ion-margin-top" style="color:white;">Nincs még fiókod? <router-link to="/register" style="color: yellow;">Regisztrálj itt!</router-link></p>
-          <p class="ion-margin-top" style="color:black;"> <router-link to="/register" style="color: yellow;">Elfelejtett jelszó</router-link></p>
-        
+          <ion-card class="password-reset" v-if="forgotPassword">
+            <ion-card-content >
+              <ion-card-title style="color: #186049; margin-left: 7px; margin-bottom: 10px; margin-top: 10px; font-size: 17px;">Jelszó helyreállítási email</ion-card-title>
+              <form @submit.prevent="sendPasswordResetEmail">
+                <ion-list>
+                    <ion-item style="margin-top: 0px;">
+                        <ion-label position="floating">Email cím</ion-label>
+                        <ion-input
+                        clearInput
+                        fill="outline"
+                        :value="email"
+                        @ionInput="email = $event.target.value;"
+                        type="email"
+                        counter="true"
+                        helper-text="Enter an email"
+                        error-text="Please enter a valid email" 
+                        ></ion-input>
+                    </ion-item> 
+                </ion-list>
+                <ion-button expand="fill" class="megse" v-if="forgotPassword" @click="forgotPassword = false">Mégse</ion-button>
+                <ion-button expand="fill" type="submit" class="kuldes">Küldés</ion-button>
+            </form>
+
+                <p v-if="error">{{ error }}</p>
+            </ion-card-content>
+          </ion-card>
+          <p class="ion-margin-top" style="color:white;" v-if="!forgotPassword">Nincs még fiókod? <router-link to="/register" style="color: #fce702;">Regisztrálj itt!</router-link></p>
+          <div class="login-card" v-if="!forgotPassword">
+            <ion-button expand="block" class="password-recovery"  @click="forgotPassword = true">Elfelejtett jelszó</ion-button>
+          </div>
         </div>
       </ion-content>
     </ion-page>
   </template>
   
   <script lang="ts">
-    import { IonInput, IonItem, IonList, IonCard, IonButton, IonCardContent } from '@ionic/vue';
-    import { defineComponent } from 'vue';
+    import { defineComponent, ref} from 'vue';
     import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+    import useAuth from "@/composables/useAuth";
+
+
 
     const client = axios.create({
     baseURL: 'http://127.0.0.1:8000', // Update baseURL to match your backend server URL
@@ -71,7 +90,8 @@
         return {
         email: '',
         password: '',
-        error: ''
+        error: '',
+        forgotPassword: false,
         };
     },
 
@@ -95,13 +115,43 @@
             console.log(response.status);
             console.log(response.data);
             // Handle successful login here, e.g., redirect to another page
+            useAuth.isLoggedIn = ref(true);
             this.$router.push('/tabs/feed');
+            console.log("Sikeres bejelentkezés");
         } catch (err) {
             console.error(err);
             this.error = 'Invalid email address or password!';
             // Handle login error here
         }
         },
+
+      async sendPasswordResetEmail() {
+        const config: AxiosRequestConfig = {
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            },
+        };
+      try {
+            const data = {
+            email: this.email,
+            };
+            console.log('Request Data:', data);
+            const response: AxiosResponse = await client.post("/api/reset-password", data, config);
+            console.log(response.status);
+            console.log(response.data);
+
+        if (response.status === 200) {
+          this.email = "";
+          alert("Email küldve!");
+        } else {
+          alert("Hiba történt!");
+        }
+      } catch (error: any) {
+        alert(error.response.data.error);
+        this.email = "";
+      }
+    },
     },
     });
 
@@ -168,5 +218,28 @@
     --background: #186049; 
     --border-radius: 5px;
     margin-top: 10px;
+    margin-bottom: 0px;
   }
-  </style>
+  .password-recovery{
+    --background: white;
+    color:#186049; 
+    --border-radius: 5px;
+    margin-top: 10px;
+    width: 235px;
+  }
+
+  /*.password-reset{
+    display:inline
+  }
+  .login-card{
+    display:none
+  }*/
+  .megse{
+    --background: #95877a; 
+    --color: #ffffff;
+  }
+  .kuldes{
+    --color: #ffffff;
+    float: right;
+  }
+  </style>@/router/useAuth@/composables/useAuth

@@ -131,7 +131,7 @@
 
 <script setup lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonItem } from '@ionic/vue';
-import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, cogOutline, personOutline, menuOutline, trashBinOutline, peopleOutline } from 'ionicons/icons';
+import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, personOutline, menuOutline, trashBinOutline, peopleOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 
 import  router  from '@/router';

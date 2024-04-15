@@ -65,7 +65,6 @@
     IonInput,
     modalController,
   } from '@ionic/vue';
-  import { ellipsisVertical } from 'ionicons/icons';
   import { defineComponent } from 'vue';
 
   export default defineComponent({

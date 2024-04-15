@@ -2,16 +2,15 @@
     <ion-page>
       
       <ion-content class="ion-padding no-scroll nice-ion-content" fullscreen>
-        <ion-card class="outside-card">
+        <ion-card class="outside-card" style=" margin-top: 50px;">
         <ion-grid>
           <ion-row>
           <ion-col >
           <img alt="Silhouette of a person's head" style="border-radius: 15px 0px 0px 15px; height: 700px; margin: -8px; " src="/assets/images/LandingPictureWhite.png" />
         </ion-col>
         <ion-col>
-          <ion-label style="font-size: 25px; font-weight: bolder; text-align: center; color: white; margin: 50px;">TRASH BUSTERS</ion-label>
+          <!--<ion-label style="font-size: 25px; font-weight: bolder; text-align: center; color: white; margin: 50px;">TRASH BUSTERS</ion-label>-->
           <ion-card class="inside-ion-card">
-          <!--<ion-toolbar ></ion-toolbar>-->
                 <ion-segment v-model="segment" value="login" class="segment-style">
                   <ion-segment-button value="registration" @click="goToRegistration">
                     <ion-label>Regisztráció</ion-label>
@@ -37,6 +36,32 @@
       </ion-row>
       </ion-grid>
     </ion-card>
+    
+    <ion-card class="mobile-inside-ion-card">
+                <ion-segment v-model="segment" value="login" class="segment-style">
+                  <ion-segment-button value="registration" @click="goToRegistration">
+                    <ion-label>Regisztráció</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button v-model="segment" value="login" @click="goToLogin">
+                    <ion-label>Bejelentkezés</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              
+            
+         <!--Render LoginComponent.vue when the "Login" segment is active-->
+        <ion-grid class="mobile-auth-grid">
+        <template v-if="segment === 'registration'">
+            <RegisterComponent />
+        </template>
+      
+        <template v-if="segment === 'login'">
+          <LoginComponent />
+        </template>
+      </ion-grid>
+      </ion-card>
+      <!--<ion-grid>
+        <PasswordRecoveryPage/>
+      </ion-grid>-->
       </ion-content>
     </ion-page>
   </template>
@@ -44,7 +69,7 @@
   <script lang="ts">
   import LoginComponent from "@/components/LoginComponent.vue";
   import RegisterComponent from "@/components/RegisterComponent.vue";
-
+  
   
   import { defineComponent } from "vue";
   
@@ -52,6 +77,7 @@
     components: {
       RegisterComponent,
       LoginComponent
+     
     },
     data() {
       return {
@@ -86,6 +112,14 @@
     height: 552px;
     width: 300px;
 }
+.mobile-auth-grid{
+    border: 3px white solid;
+    border-top: transparent;
+    border-radius: 0px 0px 10px 10px;
+    height: 552px;
+    width: 300px;
+    margin: auto;
+}
   ion-grid{
     border: 5px white solid;
     border-radius: 15px;
@@ -95,14 +129,22 @@
     
   }
 
-
+  .mobile-inside-ion-card{
+    height: 600px;
+    width: 300px;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 40px;
+    color:#186049 ;
+  }
 
   .inside-ion-card{
     height: 600px;
     width: 300px;
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 40px;
     color:#186049 ;
+    
   }
   .outside-card{
     border: 3px white solid;
@@ -153,4 +195,16 @@
     border-radius: 20px;
   }
   }
+
+  @media (min-width: 765px) {
+  .mobile-inside-ion-card{
+    display: none;
+  }
+}
+
+@media (max-width: 765px) {
+  .outside-card{
+    display: none;
+  }
+}
   </style>

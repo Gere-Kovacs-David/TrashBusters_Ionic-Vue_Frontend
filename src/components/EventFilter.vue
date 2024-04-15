@@ -1,248 +1,126 @@
 <template>
-    <ion-page>
-      <ion-content :fullscreen="true" style="overflow: hidden;">
-        <ion-card :class="{ 'ion-margin-large': screenWidth > 1024 }">
-          <ion-card-content :style="{ width: screenWidth > 1024 ? '1000px' : '300px', margin: 'auto'}">
-            <div class="ion-padding-horizontal ion-justify-content-center">
-            <ion-grid class="ion-no-padding">
-                <ion-row>
-                <ion-col class="ion-margin-bottom " >
-                    <ion-label position="floating" style="padding-left: 30%; font-size: large; font-weight: bold; color: black;">Események szűrése</ion-label>
-                </ion-col>
-            </ion-row>
-              <ion-row>
-                <ion-col class="ion-margin-bottom " >
-              <ion-item class="ion-margin-bottom" color=" #e4d5c7">
+    <ion-page style="overflow: hidden;">
+      <ion-content class="ion-padding" style="overflow-y: hidden; height: 650px;">
+        <ion-card class="search-card" style="margin: auto; border: white; box-shadow: none;">
+          <ion-card-header >
+                <ion-card-title class="title" style="border: 1px solid white; margin: auto; margin-bottom: 15px; text-align: center;">Események szűrése</ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="margin: -15px;">
+            <form @submit.prevent="searchData">
+              <ion-item>
                 <ion-label position="floating">Esemény neve</ion-label>
-                <ion-input v-model="searchTitle" clearInput></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col  class="ion-margin-bottom">
-              <ion-item class="ion-margin-bottom " color=" #e4d5c7">
-                <ion-label position="floating">Város</ion-label>
-                <ion-input v-model="searchCity" clearInput></ion-input>
-              </ion-item>
-            </ion-col>
-            </ion-row>
-            <ion-row>
-            <ion-col size="6" class="ion-margin-bottom">
-              <ion-item class="ion-margin-bottom " color=" #e4d5c7">
-                <ion-label position="floating">Utca, tér</ion-label>
-                <ion-input v-model="searchAddress" clearInput></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6" class="ion-margin-bottom">
-              <ion-item class="ion-margin-bottom" color=" #e4d5c7">
-                <ion-label position="floating">Min. résztvevők</ion-label>
-                <ion-input v-model.number="model" type="number"></ion-input>
-              </ion-item>
-            </ion-col>
-            </ion-row>
-              <ion-item class="ion-margin-bottom" color=" #e4d5c7">
-                <ion-label position="floating">Dátum</ion-label>
-                <ion-input v-model="date" type="date" ></ion-input>
-              </ion-item>
-              
-              <div class="ion-margin-large ion-gutter ">
-                <ion-row>
-                <ion-col size="6" class="ion-margin-bottom">
-                    <ion-button expand="block" @click="filterReset" class="delete-filter-button" :disabled="checkInputFields">Szűrők törlése</ion-button>
-                </ion-col>
-                <ion-col size="6" class="ion-margin-bottom">
-                    <ion-button expand="block" @click="searchData" class="search-button" :disabled="checkInputFields">Keresés</ion-button>
-                </ion-col>
-                </ion-row>
-              </div>
-                </ion-grid>
+                
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Város</ion-label>
+              <ion-input v-model="searchCity" @ionInput="searchCity = $event.target.value;" clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Utca, tér</ion-label>
+              <ion-input v-model="searchAddress" @ionInput="searchAddress = $event.target.value;" clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Min. résztvevők</ion-label>
+              <ion-input v-model.number="model" @ionInput="model = $event.target.value;" type="number"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Dátum</ion-label>
+              <ion-input v-model="date" @ionInput="date = $event.target.value;" type="date" ></ion-input>
+            </ion-item>
+
+          <div>
+            <ion-button expand="fill" @click="filterReset" color="danger" >Törlés</ion-button>
+            <ion-button expand="fill" type="submit" class="kuldes">Keresés</ion-button>
             </div>
+          </form>
           </ion-card-content>
         </ion-card>
-        <div v-if="filteredData.length > 0" class="ion-padding-top ion-margin-vertical">
-        <ion-grid :class="{ 'ion-margin-top': screenWidth > 1024 }">
-          <ion-row>
-            <ion-col :size="12 / columns.length" v-for="(column, index) in columns" :key="index">
-              <ion-label>{{ column.label }}</ion-label>
-            </ion-col>
-          </ion-row>
-          <ion-row v-for="row in filteredData" :key="row.id" @click="openCard(row)">
-            <ion-col :size="12 / columns.length" v-for="(column, index) in columns" :key="index">
-              <ion-label>{{ row[column.name] }}</ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-      <ion-modal v-model="cardVisible">
-        <ion-content>
-          <ion-card :class="{ 'ion-margin-large': screenWidth > 1024 }" :style="{ width: screenWidth > 1024 ? '500px' : '270px' }">
-            <ion-card-header>
-              <ion-card-title class="ion-text-center">{{ selectedRow.title }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <div v-if="selectedRow">
-                <div v-if="selectedRow.eventPictureURL" class="ion-margin-bottom ion-text-center">
-                  <ion-img :src="selectedRow.eventPictureURL"></ion-img>
-                </div>
-                <div v-if="selectedRow.description !== 'null'" class="ion-margin-bottom">
-                  <p class="ion-text-center">{{ selectedRow.description }}</p>
-                </div>
-                <div class="ion-margin-bottom">
-                  <strong>Helyszín:</strong> {{ selectedRow.location }}, {{ selectedRow.place }}
-                </div>
-                <div class="ion-margin-bottom">
-                  <strong>Résztvevők:</strong> {{ selectedRow.participants }} fő
-                </div>
-                <div class="ion-margin-bottom">
-                  <strong>Időpont:</strong> {{ selectedRow.date }}, {{ selectedRow.time }}
-                </div>
-                <div class="ion-margin-bottom">
-                  <strong>Szervező:</strong> {{ creatorName }}
-                </div>
-                <div class="ion-margin-bottom">
-                  <strong>Lerakó:</strong> {{ dumpName }}
-                </div>
-              </div>
-            </ion-card-content>
-            <ion-card-actions>
-              <ion-button color="danger" @click="closeCard">Bezárás</ion-button>
-              <ion-button color="warning" @click="openParticipantsCard" :disabled="selectedRow.participants === 0">Résztvevők</ion-button>
-              <ion-button color="success" @click="joinEvent" :disabled="pairExists">Csatlakozás</ion-button>
-            </ion-card-actions>
-          </ion-card>
-        </ion-content>
-      </ion-modal>
-      <ion-modal v-model="participantsCardVisible">
-        <ion-content>
-          <ion-card :class="{ 'ion-margin-large': screenWidth > 1024 }" :style="{ width: screenWidth > 1024 ? '500px' : '270px' }">
-            <ion-card-header>
-              <ion-card-title class="ion-text-center">{{ selectedRow.title }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <div v-if="participants.length > 0 && !loading">
-                <ion-list>
-                  <ion-item v-for="participant in participants" :key="participant.id" @click="openUserProfile(participant.id)">
-                    <ion-avatar slot="start">
-                      <ion-img :src="participant.profilePictureURL"></ion-img>
-                    </ion-avatar>
-                    <ion-label>
-                      <ion-text class="ion-text-underline">{{ participant.username }}</ion-text>,
-                      {{ participant.city }}
-                    </ion-label>
-                  </ion-item>
-                </ion-list>
-              </div>
-              <div v-if="participants.length === 0 && loading" class="ion-text-center">
-                <p>No participants for this event.</p>
-              </div>
-            </ion-card-content>
-            <ion-card-actions>
-              <ion-button color="danger" @click="closeParticipantsCard">Bezárás</ion-button>
-            </ion-card-actions>
-          </ion-card>
-        </ion-content>
-      </ion-modal>
 
       </ion-content>
       
     </ion-page>
   </template>
   
-  <script>
-export default {
+  <script lang="ts">
+import { defineComponent } from 'vue';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+
+export interface EventData {
+  id: string;
+  title: string;
+  location: string;
+  participants: number;
+  date: string;
+  eventPictureURL: string;
+  description: string;
+  place: string;
+  time: string;
+}
+
+const client = axios.create({
+  baseURL: 'http://127.0.0.1:8000',
+});
+
+ /*export default defineComponent({
+  name: 'EventFilter',
   data() {
     return {
-      screenWidth: window.innerWidth,
       searchTitle: '',
       searchCity: '',
       searchAddress: '',
       model: 0,
       date: '',
-      filteredData: [
-        { id: 1, title: 'Event 1', location: 'Location 1', place: 'Place 1', participants: 10, date: '2024-03-23', time: '12:00', description: 'Description 1', eventPictureURL: 'https://via.placeholder.com/150', },
-        { id: 2, title: 'Event 2', location: 'Location 2', place: 'Place 2', participants: 5, date: '2024-03-24', time: '14:00', description: 'Description 2', eventPictureURL: 'https://via.placeholder.com/150', },
-      ],
-      user: null,
-      cardVisible: false,
-      selectedRow: {},
-      creatorName: 'Creator',
-      dumpName: 'Dumper',
-      pairExists: false,
-      participantsCardVisible: false, // Fixed typo here
-      participants: [],
-      loading: false,
-      minDate: new Date().toISOString().split('T')[0],
+      filteredData: [],
     };
   },
   methods: {
-    checkInputFields() {
-      return !this.searchTitle && !this.searchCity && !this.searchAddress && !this.model && !this.date;
-    },
-    searchData() {
-      // Simulate search functionality
-      this.filteredData = this.filteredData.filter(item => {
-        const lowerSearch = this.searchTitle.toLowerCase();
-        const lowerCity = this.searchCity.toLowerCase();
-        const lowerPlace = this.searchAddress.toLowerCase();
+   async searchData() {
+      const config: AxiosRequestConfig = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
 
-        return (
-          item.title.toLowerCase().includes(lowerSearch) &&
-          item.location.toLowerCase().includes(lowerCity) &&
-          item.place.toLowerCase().includes(lowerPlace) &&
-          item.participants >= parseInt(this.model) &&
-          (this.date ? item.date.includes(this.date) : true)
-        );
-      });
+      try {
+        const response: AxiosResponse<EventData[]> = await client.get('/api/events', {
+          params: {
+            title: this.searchTitle,
+            location: this.searchCity,
+            place: this.searchAddress,
+            participants: this.model.toString(),
+            date: this.date || "",
+          },
+          ...config,
+        });
+
+        this.filteredData = response.data.filter((item: EventData) => {
+          const lowerSearch = this.searchTitle.toLowerCase();
+          const lowerCity = this.searchCity.toLowerCase();
+          const lowerPlace = this.searchAddress.toLowerCase();
+
+          return (
+            item.title.toLowerCase().includes(lowerSearch) &&
+            item.location.toLowerCase().includes(lowerCity) &&
+            item.place.toLowerCase().includes(lowerPlace) &&
+            item.participants >= parseInt(this.model.toString()) &&
+            (this.date ? item.date.includes(this.date) : true)
+          );
+        });
+
+        // Reset input fields
+        this.searchTitle = "";
+        this.searchCity = "";
+        this.searchAddress = "";
+        this.model = 0;
+        this.date = "";
+      } catch (error) {
+        console.error("Error during search:", error);
+      }
     },
-    filterReset() {
-      // Simulate filter reset
-      this.searchTitle = '';
-      this.searchCity = '';
-      this.searchAddress = '';
-      this.model = 0;
-      this.date = '';
-      this.filteredData = [
-        { id: 1, title: 'Event 1', location: 'Location 1', place: 'Place 1', participants: 10, date: '2024-03-23', time: '12:00', description: 'Description 1', eventPictureURL: 'https://via.placeholder.com/150', },
-        { id: 2, title: 'Event 2', location: 'Location 2', place: 'Place 2', participants: 5, date: '2024-03-24', time: '14:00', description: 'Description 2', eventPictureURL: 'https://via.placeholder.com/150', },
-      ];
-    },
-    openCard(row) {
-      this.selectedRow = row;
-      this.cardVisible = true;
-    },
-    closeCard() {
-      this.cardVisible = false;
-    },
-    openParticipantsCard() {
-      // Simulate fetching participants data
-      this.participants = [{ id: 1, username: 'Participant 1', city: 'City 1', profilePictureURL: 'https://via.placeholder.com/150' }, { id: 2, username: 'Participant 2', city: 'City 2', profilePictureURL: 'https://via.placeholder.com/150' }];
-      this.participantsCardVisible = true; // Fixed typo here
-    },
-    closeParticipantsCard() {
-      this.participantsCardVisible = false; // Fixed typo here
-    },
-    joinEvent() {
-      // Simulate joining event
-      this.pairExists = true;
-    },
-    openUserProfile(userId) {
-      // Simulate opening user profile
-      console.log('Open user profile:', userId);
-    },
-    updateScreenWidth() {
-      this.screenWidth = window.innerWidth;
-    }
   },
-  mounted() {
-    window.addEventListener('resize', this.updateScreenWidth);
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.updateScreenWidth);
-  },
-  computed: {
-    selectedRowTitle() {
-      return this.selectedRow.title;
-    }
-  }
-};
+});*/
 </script>
 
   
@@ -305,6 +183,75 @@ export default {
     --ripple-color: #6ab29c;
     --padding-top: 10px;
     --padding-bottom: 10px;
+  }
+
+  .recovery-card{
+    margin: auto;
+    margin-top: 70px;
+    max-width: 500px;
+  }
+  ion-card{
+    background-color: white;
+  }
+  
+    
+      
+  ion-input{
+    --background: transparent;
+    --color: #95877a;
+    --placeholder-color: #e5d5c6;
+  
+    
+    --padding-bottom: 10px;
+    --padding-end: 10px;
+    --padding-start: 10px;
+    --padding-top: 10px;
+      }
+
+    ion-item {
+    margin-top: 7px;
+    margin-bottom: 15px;
+    --background: #e5d5c6;
+    --color: #95877a;
+
+    --border-radius: 5px;
+
+    --ripple-color: #37865b;
+
+    --detail-icon-color: white;
+    --detail-icon-opacity: 1;
+    --detail-icon-font-size: 20px;
+  }
+
+  ion-button{
+    --background: #186049; 
+    --border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+  }
+
+  .title{
+    color: #186049; 
+    margin-left: 25%; 
+    margin-bottom: 10px; 
+    margin-top: 10px; 
+    font-size: 22px; 
+    font-weight: bold;
+  }
+
+  @media (max-width: 765px) {
+    .title{
+     margin-left: 5%;
+    }
+}
+
+.megse{
+    --background: #95877a; 
+    --color: #ffffff;
+  }
+  .kuldes{
+    --color: #ffffff;
+    float: right;
   }
   </style>
  

@@ -11,17 +11,25 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/landing',
   },
   {
+    path: '/recovery',
+    name: 'PasswordRecoveryPage',
+    component: () => import('@/views/PasswordRecoveryPage.vue'),
+  },
+  {
     path: '/landing',
     component: LandingPage,
     children: [
       {
-      path: 'login',
+      path: '/login',
+      name: 'LoginPage',
       component: LoginComponent,
       },
       {
-        path: 'register',
-        component: RegisterComponent,
-        },
+      path: '/register',
+      name: 'RegisterPage',
+      component: RegisterComponent,
+      },
+      
     ]
   },
   {
@@ -29,8 +37,12 @@ const routes: Array<RouteRecordRaw> = [
     component: LoginComponent,
   },
   {
-    path: '/landing/login',
+    path: '/landing/register',
     component: RegisterComponent,
+  },
+  {
+    path: '/recovery',
+    component: () => import('@/views/PasswordRecoveryPage.vue'),
   },
   {
     path: '/tabs/',
