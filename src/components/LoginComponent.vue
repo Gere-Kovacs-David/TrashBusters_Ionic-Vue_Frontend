@@ -75,11 +75,11 @@
   
   <script lang="ts">
     import { defineComponent, ref} from 'vue';
-    import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+    import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders} from 'axios';
     import useAuth from "@/composables/useAuth";
 
 
-
+     
     const client = axios.create({
     baseURL: 'http://127.0.0.1:8000', // Update baseURL to match your backend server URL
     });
@@ -103,6 +103,7 @@
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             },
+            
         };
 
         try {
@@ -112,16 +113,28 @@
             };
             console.log('Request Data:', data);
             const response: AxiosResponse = await client.post('/api/auth/login', data, config);
-            console.log(response.status);
-            console.log(response.data);
-            // Handle successful login here, e.g., redirect to another page
-            useAuth.isLoggedIn = ref(true);
-            this.$router.push('/tabs/feed');
-            console.log("Sikeres bejelentkezés");
-        } catch (err) {
-            console.error(err);
-            this.error = 'Invalid email address or password!';
-            // Handle login error here
+
+            if(response.data.user.isVerified){
+              console.log(response.status);
+              console.log(response.data);
+              console.log(`${response.data.user}`);
+              document.cookie = `token=${response.data.accessToken}; path=/;`;
+              const userJson = JSON.stringify(response.data.user);
+              document.cookie = `user=${userJson}; path=/;`;
+              useAuth.isLoggedIn = ref(true);
+              this.$router.push('/tabs/feed');
+              console.log("Sikeres bejelentkezés");
+            }
+            else{
+              alert("Még nem erősítette meg a felhasználóját!");
+            }
+
+            
+            
+        } catch (error) {
+            console.error(error);
+            this.error = 'Téves email vagy jelszó';
+            alert(this.error);
         }
         },
 
@@ -154,7 +167,6 @@
     },
     },
     });
-
     
 
 

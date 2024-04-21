@@ -2,8 +2,22 @@
     <ion-page>
       
       <ion-content :fullscreen="true">
-
-      <PasswordRecoveryPage/>
+        <ion-card style=" width: 90%; height: 80%; margin: auto; margin-top: 85px">
+          <ion-grid style="margin: auto; border: 1px black solid; width: 100%; height: 100%;" >
+            <ion-row>
+              <ion-col>
+                <iframe
+                  width=100%
+                  height=300%
+                  frameborder="0" style="border:0"
+                  src="https://www.google.com/maps/embed/v1/place?q=place_id&key=AIzaSyDp0Aa2C_3ujfr0RlclP52t7jxhqcCZhes" allowfullscreen>
+                </iframe>
+              </ion-col>
+              </ion-row>
+          </ion-grid>
+        </ion-card>
+      <!--<PasswordRecoveryPage/>-->
+      
               
 
       </ion-content>

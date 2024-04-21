@@ -38,7 +38,7 @@
             <ion-col class="side-col">
               <ion-buttons>
                 <ion-menu-toggle>
-                  <ion-segment v-model="segment" color="transparent">
+                  <ion-segment v-model="segment" v-if="useAuth.isLoggedIn.value = true" color="transparent">
                     <ion-segment-button value="info" style="margin-left: -25px;">
                       <ion-icon :icon="menuOutline" class="header-icon mobile-header-segment"/>
                       <!--<label style="font-size: 10px;">Info</label>-->
@@ -51,7 +51,7 @@
 
             <ion-col></ion-col>
             <ion-col class="desktop-header">
-              <ion-segment v-model="segment" color="dark">
+              <ion-segment v-model="segment" v-if="useAuth.isLoggedIn.value = true" color="dark">
                 <ion-segment-button value="info" @click="goTo('/tabs/info')">
                   <ion-icon :icon="bookOutline" class="header-icon"/>
                   <!--<label style="font-size: 10px;">Info</label>-->
@@ -82,7 +82,7 @@
             
             <ion-col class="side-col">
               <ion-buttons>
-                <ion-segment v-model="segment" color="transparent">
+                <ion-segment v-model="segment" v-if="useAuth.isLoggedIn.value = true" color="transparent">
                     <ion-segment-button value="profile" @click="goTo('/tabs/profile')">
                       <ion-icon :icon="personOutline" class="header-icon mobile-header-segment"/>
                       <!--<label style="font-size: 10px;">Info</label>-->
@@ -99,7 +99,7 @@
   
 
 
-    <ion-tabs >
+    <ion-tabs v-if="useAuth.isLoggedIn.value = true">
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom" class="mobile-tab-bar" style="background-color: #18604a;">
         <ion-tab-button tab="info" href="/tabs/info" >
@@ -133,8 +133,11 @@
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonItem } from '@ionic/vue';
 import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, personOutline, menuOutline, trashBinOutline, peopleOutline } from 'ionicons/icons';
 import { ref } from 'vue';
-
 import  router  from '@/router';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import useAuth from "@/composables/useAuth";
+import { defineComponent } from "vue";
+import Cookies from "js-cookie";
 
 const segment = ref<string>('feed');
 
@@ -146,6 +149,24 @@ const goTo = (path: string) => {
 const switchSegment = (segmentValue: string) => {
   segment.value = segmentValue; // Update the segment value
 };
+
+const defa = defineComponent({
+  setup() {
+    return {
+      useAuth,
+      tab: null,
+    };
+  },
+  methods: {
+    logout() {
+      useAuth.isLoggedIn.value = false;
+      Cookies.remove("token", { path: "/" });
+      Cookies.remove("user", { path: "/" });
+      //this.user = null;
+      this.$router.push("/landing");
+    },
+  },
+  });
 </script>
 
 <style>

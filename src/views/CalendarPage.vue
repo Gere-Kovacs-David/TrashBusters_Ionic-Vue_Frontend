@@ -46,14 +46,20 @@ const calendarApp = createCalendar({
     {
       id: 2,
       title: 'Event 1',
-      start: '2023-12-20 12:00',
-      end: '2023-12-20 14:00',
+      start: '2024-04-20 12:00',
+      end: '2024-04-20 14:00',
     },
     {
       id: 3,
       title: 'Event 3',
       start: '2023-12-19',
       end: '2023-12-21',
+    },
+    {
+      id: 4,
+      title: 'Event 3',
+      start: '2024-04-20 12:10',
+      end: '2024-04-20 12:00',
     },
   ],
   //plugins: [scrollController]

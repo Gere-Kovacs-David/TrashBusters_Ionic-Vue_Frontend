@@ -6,7 +6,7 @@
           <ion-card-content >
             <!--<ion-card-title>Regisztráció</ion-card-title>-->
 
-            <form @submit="register">
+            <form @submit.prevent="register">
              
               <ion-list>
                   <ion-item style="margin-top: 0px;">

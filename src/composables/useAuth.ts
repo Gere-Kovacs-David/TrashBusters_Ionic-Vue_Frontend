@@ -1,7 +1,7 @@
 import { ref, Ref } from "vue";
 import Cookies from "js-cookie";
 
-// Define types for isLoggedIn and user
+/*// Define types for isLoggedIn and user
 interface AuthState {
   isLoggedIn: Ref<boolean>;
   user: Ref<any>; // Change 'any' to a more specific type if possible
@@ -15,7 +15,7 @@ function initializeAuthState(): AuthState {
     isLoggedIn.value = true;
   }
 
-  const user: Ref<any> = ref(null); // Change 'any' to a more specific type if possible
+  const user: Ref<any> = ref(null);
 
   return {
     isLoggedIn,
@@ -24,4 +24,16 @@ function initializeAuthState(): AuthState {
 }
 
 // Export the initialized auth state
-export default initializeAuthState();
+export default initializeAuthState();*/
+const isLoggedIn = ref(false);
+
+if (Cookies.get("user") != null && Cookies.get("token") != null) {
+  isLoggedIn.value = true;
+}
+
+const user = ref(null);
+
+export default {
+  isLoggedIn,
+  user,
+};

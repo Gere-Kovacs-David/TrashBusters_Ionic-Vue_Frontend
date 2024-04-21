@@ -1,104 +1,75 @@
 <template>
-  <ion-content >
-    <ion-grid style="margin-top: 55px; overflow: hidden;">
-      <ion-row style="height: 670px; margin-top: 0;">
-        <ion-col
-          style="overflow: hidden; max-width: 350px; min-width: 350px; margin-top: 20px; height: 650px; border-radius: 20px; background-color:#ebe2d9;"
-          class="mobile-col">
-          <ion-card>
-            <div class="ion-padding">
-              <div>
-                <div class="ion-margin-bottom flex justify-center">
-                  <ion-card class="search-card" style="margin: auto;  border: white; box-shadow: none;">
-                    <ion-card-header>
-                      <ion-card-title class="title"
-                        style="border: 1px solid white; margin: auto; margin-bottom: 15px; text-align: center;">Események
-                        szűrése</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content style="margin: -15px;">
-                      <form @submit.prevent="searchData">
-                        <ion-item>
-                          <ion-label position="floating">Esemény neve</ion-label>
-                          <ion-input v-model="searchTitle" @ionInput="searchTitle = $event.target.value;"
-                            clearInput></ion-input>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label position="floating">Város</ion-label>
-                          <ion-input v-model="searchCity" @ionInput="searchCity = $event.target.value;"
-                            clearInput></ion-input>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label position="floating">Utca, tér</ion-label>
-                          <ion-input v-model="searchAddress" @ionInput="searchAddress = $event.target.value;"
-                            clearInput></ion-input>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label position="floating">Min. résztvevők</ion-label>
-                          <ion-input v-model.number="model" @ionInput="model = $event.target.value;"
-                            type="number"></ion-input>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label position="floating">Dátum</ion-label>
-                          <ion-input v-model="date" @ionInput="date = $event.target.value;" type="date"></ion-input>
-                        </ion-item>
-                        <div>
-                          <ion-button expand="fill" @click="filterReset" color="danger">Törlés</ion-button>
-                          <ion-button expand="fill" type="submit" class="kuldes">Keresés</ion-button>
-                        </div>
-                      </form>
-                    </ion-card-content>
-                  </ion-card>
-                </div>
-              </div>
-            </div>
-          </ion-card>
-          
-          <ion-button expand="block" id="openCreate" style="color: #ffffff;" @click="openCreate">Új esemény
-            létrehozása</ion-button>
-        </ion-col>
-        <ion-col style="margin-top: -40px; border-radius: 50px;">
-          <ion-card class="section" style="border-radius: 20px; margin-top: 55px; background-color:#ebe2d9; height: 650px; overflow-y: scroll;">
-            <div v-if="filteredData.length > 0" style="margin-top: 50px; background-color:#ebe2d9;">
-              <ion-row style=" margin-top: -50px;">
-                <ion-col size="12" size-md="6" size-lg="3" v-for="row in filteredData" :key="row.id"
-                  style="width: 250px; ">
-                  <ion-card style="height: 320px; background-color: #f2eeeb; border-radius: 10px;"
-                    @click="openCard(row); openParticipantsCard()" id="openEvent">
-                    <img alt="Event image"
-                      :src="row.eventPictureURL || 'https://ionicframework.com/docs/img/demos/card-media.png'"
-                      style="width: 100%; max-height: 45%;" />
-                    <ion-card-content>
-                      <ion-card-title style="color: black; text-align: center; margin-bottom: 10px">{{ row.title
-                        }}</ion-card-title>
-                      <ion-card style="width: 100%; margin: auto">
-                        <table class="smallcard" style="width: 105%;">
-                          <tr>
-                            <td >Helyszín:</td>
-                            <td>{{ row.location }}</td>
-                          </tr>
-                          <tr>
-                            <td>Résztvevők száma:</td>
-                            <td>{{ row.participants }}</td>
-                          </tr>
-                          <tr>
-                            <td>Dátum:</td>
-                            <td style="width: 100px;">{{ row.date }}</td>
-                          </tr>
-                        </table>
-                      </ion-card>
-                    </ion-card-content>
-                  </ion-card>
-                </ion-col> 
-              </ion-row>
-            </div>
-            <div v-else>
-              <p>No data available.</p>
-            </div>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-backdrop v-if="selectedRow"></ion-backdrop>
+    <ion-page>
+        <ion-content>
+        <ion-card class="mobile-card desktop-card"
+            style="margin-left: 0%; margin-right: 0%; margin-top: 75px; border-radius: 0px 0px 30px 30px; background-color: #186049">
+            <ion-grid>
+                <ion-row>
+                    <ion-col class="desktop-profile"></ion-col>
+                    <ion-col style="max-width: 250px">
+
+                        <img alt="Silhouette of a person's head"
+                            style=" margin:auto; border: solid #6ab29b ; border-radius: 50%; height: 250px; width: 250px"
+                            src="https://trashbusters.s3.eu-central-1.amazonaws.com/profile-pictures/1711479008_Képernyőkép 2024-02-09 101524.png"/>
+                    </ion-col>
+                    <ion-col class="desktop-profile"></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col class="desktop-profile"></ion-col>
+                    <ion-col style="max-width: 200px; padding-left: 50px;">
+                        <iom-label
+                            style="margin: auto; font-size: 20px; font-weight: bold; color: white;">Csokker</iom-label>
+                    </ion-col>
+                    <ion-col class="desktop-profile"></ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+        <ion-grid>
+            <ion-row>
+                <ion-col style="margin-top: -40px; border-radius: 50px;">
+                <ion-card class="section" style="border-radius: 20px; margin-top: 55px; background-color:#ebe2d9; height: 650px; overflow-y: scroll;">
+                    <div v-if="filteredData.length > 0" style="margin-top: 50px; background-color:#ebe2d9;">
+                    <ion-row style=" margin-top: -50px;">
+                        <ion-col size="12" size-md="6" size-lg="3" v-for="row in filteredData" :key="row.id"
+                        style="width: 250px; ">
+                        <ion-card style="height: 320px; background-color: #f2eeeb; border-radius: 10px;"
+                            @click="openCard(row); openParticipantsCard()" id="openEvent">
+                            <img alt="Event image"
+                            :src="row.eventPictureURL || 'https://ionicframework.com/docs/img/demos/card-media.png'"
+                            style="width: 100%; max-height: 45%;" />
+                            <ion-card-content>
+                            <ion-card-title style="color: black; text-align: center; margin-bottom: 10px">{{ row.title
+                                }}</ion-card-title>
+                            <ion-card>
+                                <table class="smallcard" style="width: 105%; margin-left: -5px;">
+                                <tr>
+                                    <td>Helyszín:</td>
+                                    <td>{{ row.location }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Résztvevők száma:</td>
+                                    <td>{{ row.participants }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Dátum:</td>
+                                    <td style="width: 100px;">{{ row.date }}</td>
+                                </tr>
+                                </table>
+                            </ion-card>
+                            </ion-card-content>
+                        </ion-card>
+                        </ion-col>
+                    </ion-row>
+
+                    </div>
+                    <div v-else>
+                    <p>No data available.</p>
+                    </div>
+                </ion-card>
+                </ion-col>
+            </ion-row>
+            </ion-grid>
+            <ion-backdrop v-if="selectedRow"></ion-backdrop>
     <ion-modal ref="modal" class="floating-modal" trigger="openEvent" v-if="selectedRow" :visible="modalVisible"
       :ionBackdropDismiss="true">
       <ion-header>
@@ -167,7 +138,7 @@
                       <table>
                         <tr>
                           <td class="text-td border-td" style="border: transparent;">
-                            <img :src="participant.profilePictureURL" onerror="this.onerror=null; this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Participant Avatar"
+                            <img :src="participant.profilePictureURL" alt="Participant Avatar" class="avatar q-mr-md"
                               style="width: 50px; height: 50px; border-radius: 50%" />
                           </td>
                           <td class="border-td" style="border: transparent;">
@@ -203,138 +174,10 @@
         </ion-toolbar>
       </ion-footer>
     </ion-modal>
-    <ion-backdrop v-if="createmodalVisible"></ion-backdrop>
-    <ion-modal class="floating-modal" style="height: 600px; margin-top: 0px; background-color: white;"
-      v-if="createmodalVisible">
-
-      <div class="ion-justify-content-center ion-align-items-center">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title style="text-align: center;"><strong>Esemény létrehozása</strong></ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-card style="height: 510px; width: 100%; margin: auto;" class="search-card">
-          <ion-content>
-            <form @submit.prevent="createEvent">
-              <ion-grid style="width: 100%; margin: auto">
-                <!--<ion-row>
-                  <ion-col>
-                    <div class="file-upload">
-                      <div class="file-upload__area">
-                        <div v-if="!file.isUploaded">
-                          <ion-item style="border: #000; margin: 70px;">
-                            <ion-input v-model="eventPicture" @ionInput="eventPicture = $event.target.value;" type="file" name="" id="" @change="handleFileChange($event)" accept="image/*" />
-                          </ion-item>
-                          <div v-if="errors.length > 0">
-                            <div class="file-upload__error" v-for="(error, index) in errors" :key="index">
-                              <span>{{ error }}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div v-if="file.isUploaded" class="upload-preview">
-                          <img :src="file.url" v-if="file.isImage" class="file-image" alt="" />
-                          <div v-if="!file.isImage" class="file-extention">
-                            {{ file.fileExtention }}
-                          </div>
-                          <span>
-                            {{ file.name }}{{ file.isImage ? `.${file.fileExtention}` : "" }}
-                          </span>
-                          <div style="margin-top: -75px; opacity: 0.7;">
-                            <ion-button @click="resetFileInput">Fájl módosítása</ion-button>
-                          </div>
-                          <div class="" style="margin-top: -50px">
-                            <button @click="sendDataToParent">Select File</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ion-col>
-                </ion-row>-->
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <!--<ion-input v-model="eventPicture" @ionInput="eventPicture = $event.target.value;" type="file" name="" id="" accept="image/*"/>-->
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Esemény neve</ion-label>
-                      <ion-input :value="title" v-model="title" @ionInput="title = $event.target.value;" type="text"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Város</ion-label>
-                      <ion-input :value="location" v-model="location" @ionInput="location = $event.target.value;" type="text"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Utca, tér</ion-label>
-                      <ion-input :value="place" v-model="place" @ionInput="place = $event.target.value;" type="text"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Dátum</ion-label>
-                      <ion-input :value="date" v-model="date" @ionInput="date = $event.target.value;" type="date"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Idő</ion-label>
-                      <ion-input :value="time" v-model="time" @ionInput="time = $event.target.value;" type="time"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Lerakó</ion-label>
-                      <ion-input :value="dumpId" v-model="dumpId" @ionInput="dumpId = $event.target.value;" type="text" :disabled="true"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label position="floating">Leírás</ion-label>
-                      <ion-textarea :value="description" v-model="description" @ionInput="description = $event.target.value;" type="text"></ion-textarea>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-              <ion-button expand="block" type="submit">Create Event</ion-button>
-            </form>
-
-          </ion-content>
-        </ion-card>
-        <ion-footer style="margin: 0px;">
-          <ion-toolbar class="footer-toolbar">
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-button expand="block" color="danger" @click="closeCreate">Bezárás</ion-button>
-                </ion-col>
-                <ion-col>
-                  
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-toolbar>
-        </ion-footer>
-      </div>
-      
-    </ion-modal>
-  </ion-content>
+        </ion-content>
+    </ion-page>
 </template>
-
+  
 <script lang="ts">
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
@@ -573,12 +416,6 @@ export default defineComponent({
     },
 
     async joinEvent() {
-      const config: AxiosRequestConfig = {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      };
       try {
         const user = JSON.parse(Cookies.get("user") || "");
         if (!user) {
@@ -590,15 +427,12 @@ export default defineComponent({
           // Ensure that this.selectedRow is not null or undefined
           const eventId = (this.selectedRow as any).id; // Explicitly specify the type as 'any'
           this.userId = user.id;
-
-          const joindata = {
-            eventId: eventId, 
+          await client.post("/api/participants", {
+            eventId: eventId, // Use eventId here
             userId: this.userId,
-            };
+          });
 
-          const request: AxiosResponse = await client.post("/api/participants", joindata);
-
-          const response = await client.get(`/api/participants/event/${eventId}`, config); // Use eventId here
+          const response = await client.get(`/api/participants/event/${eventId}`); // Use eventId here
 
           const participantCount = response.data.count;
           await client.patch(`/api/events/${eventId}`, { // Use eventId here
@@ -719,6 +553,7 @@ export default defineComponent({
       this.$router.push(`/user/${userId}`);
     },
 
+
     async createEvent() {
       try {
         const user = JSON.parse(Cookies.get("user") || "");
@@ -734,7 +569,6 @@ export default defineComponent({
             },
         };
 
-
         this.creatorId = user.id;
 
         const formData = new FormData();
@@ -746,9 +580,6 @@ export default defineComponent({
         formData.append("time", this.time);
         formData.append("creatorId", this.creatorId);
         formData.append("dumpId", this.dumpId);
-
-        alert(`${this.eventPicture}`)
-
 
         if (this.eventPicture) {
           formData.append("eventPicture", this.eventPicture[0]);
