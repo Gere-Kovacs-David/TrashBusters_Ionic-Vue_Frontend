@@ -27,10 +27,10 @@
         </ion-card>
         <ion-toolbar style="max-width: 300px; display: flex; justify-content: center; align-items: center; margin: auto; margin-top: -10px; border-radius: 0 0 15px 15px">
                 <ion-segment value="events" class="segment-style">
-                  <ion-segment-button value="events">
+                  <ion-segment-button value="events" class="events-segment">
                     <ion-label>Eseményeim</ion-label>
                   </ion-segment-button>
-                  <ion-segment-button value="settings">
+                  <ion-segment-button value="settings" class="settings-segment">
                     <ion-label>Beállítások</ion-label>
                   </ion-segment-button>
                 </ion-segment>
@@ -39,7 +39,60 @@
       <ion-row style="height: 670px; ">
         <ion-col style="margin-top: -40px; border-radius: 50px;">
 
-          <ion-card class="section" style="border-radius: 20px; margin-top: 35px; background-color:#ebe2d9; height: 650px; overflow: auto;">
+          <ion-card class="section profile-events" style="border-radius: 20px; margin-top: 35px; background-color:#ebe2d9; height: 650px; overflow: auto;">
+            <ion-header>
+              <ion-toolbar>
+                <ion-segment value="participant" class="segment-style">
+                  <ion-segment-button value="creator" @click="fetchCreatedData">
+                    <ion-label>Szervező vagyok</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="participant" @click="fetchParticipatedData">
+                    <ion-label>Résztvevő vagyok</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-toolbar>
+            </ion-header>
+            <ion-card class="section" style="border-radius: 20px;  background-color:#ebe2d9; height: 630px; overflow-y: scroll; box-shadow: none;">
+            <div v-if="filteredData.length > 0" style="margin-top: 50px; background-color:#ebe2d9;">
+              <ion-row style=" margin-top: -50px;">
+                <ion-col size="12" size-md="6" size-lg="3" v-for="row in filteredData" :key="row.id" style="width: 250px;">
+                  <ion-card style="height: 320px; background-color: #f2eeeb; border-radius: 10px;"
+                    @click="openCard(row); openParticipantsCard()" id="openEvent">
+                    <img alt="Event image"
+                      :src="row.eventPictureURL || 'https://ionicframework.com/docs/img/demos/card-media.png'"
+                      style="width: 100%; max-height: 45%;" />
+                    <ion-card-content>
+                      <ion-card-title style="color: black; text-align: center; margin-bottom: 10px">{{ row.title }}</ion-card-title>
+                      <ion-card>
+                        <table class="smallcard" style="width: 105%; margin-left: -5px;">
+                          <tr>
+                            <td>Helyszín:</td>
+                            <td>{{ row.location }}</td>
+                          </tr>
+                          <tr>
+                            <td>Résztvevők száma:</td>
+                            <td>{{ row.participants }}</td>
+                          </tr>
+                          <tr>
+                            <td>Dátum:</td>
+                            <td style="width: 100px;">{{ row.date }}</td>
+                          </tr>
+                        </table>
+                      </ion-card>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                
+              </ion-row>
+
+            </div>
+            <div v-else>
+              <p>No data available.</p>
+            </div>
+          </ion-card>
+        </ion-card>
+
+          <ion-card class="section profile-settings"  style="border-radius: 20px; margin-top: 35px; background-color:#ebe2d9; height: 650px; overflow: auto;">
             <ion-header>
               <ion-toolbar>
                   <ion-label style="font-size: 20px; display: flex; justify-content: center; align-items: center;">Beállítások</ion-label>
@@ -138,59 +191,6 @@
             </ion-grid>
 
           </ion-card>
-
-         <ion-card class="section" style="border-radius: 20px; margin-top: 35px; background-color:#ebe2d9; height: 650px; overflow: auto;">
-            <ion-header>
-              <ion-toolbar>
-                <ion-segment value="participant" class="segment-style">
-                  <ion-segment-button value="creator" @click="fetchCreatedData">
-                    <ion-label>Szervező vagyok</ion-label>
-                  </ion-segment-button>
-                  <ion-segment-button value="participant" @click="fetchParticipatedData">
-                    <ion-label>Résztvevő vagyok</ion-label>
-                  </ion-segment-button>
-                </ion-segment>
-              </ion-toolbar>
-            </ion-header>
-            <ion-card class="section" style="border-radius: 20px;  background-color:#ebe2d9; height: 630px; overflow-y: scroll; box-shadow: none;">
-            <div v-if="filteredData.length > 0" style="margin-top: 50px; background-color:#ebe2d9;">
-              <ion-row style=" margin-top: -50px;">
-                <ion-col size="12" size-md="6" size-lg="3" v-for="row in filteredData" :key="row.id" style="width: 250px;">
-                  <ion-card style="height: 320px; background-color: #f2eeeb; border-radius: 10px;"
-                    @click="openCard(row); openParticipantsCard()" id="openEvent">
-                    <img alt="Event image"
-                      :src="row.eventPictureURL || 'https://ionicframework.com/docs/img/demos/card-media.png'"
-                      style="width: 100%; max-height: 45%;" />
-                    <ion-card-content>
-                      <ion-card-title style="color: black; text-align: center; margin-bottom: 10px">{{ row.title }}</ion-card-title>
-                      <ion-card>
-                        <table class="smallcard" style="width: 105%; margin-left: -5px;">
-                          <tr>
-                            <td>Helyszín:</td>
-                            <td>{{ row.location }}</td>
-                          </tr>
-                          <tr>
-                            <td>Résztvevők száma:</td>
-                            <td>{{ row.participants }}</td>
-                          </tr>
-                          <tr>
-                            <td>Dátum:</td>
-                            <td style="width: 100px;">{{ row.date }}</td>
-                          </tr>
-                        </table>
-                      </ion-card>
-                    </ion-card-content>
-                  </ion-card>
-                </ion-col>
-                
-              </ion-row>
-
-            </div>
-            <div v-else>
-              <p>No data available.</p>
-            </div>
-          </ion-card>
-        </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -1333,7 +1333,5 @@ ion-segment-button.md::part(indicator-background) {
     align-items: center;
   }
 }
-/*ion-col{
-  border: #000 1px solid;
-}*/
+
 </style>

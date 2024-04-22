@@ -1,9 +1,9 @@
 <template>
   <ion-content >
-    <ion-grid style="margin-top: 55px; overflow: hidden;">
+    <ion-grid class="mobile-grid" style="margin-top: 55px;">
       <ion-row style="height: 670px; margin-top: 0;">
-        <ion-col
-          style="overflow: hidden; max-width: 350px; min-width: 350px; margin-top: 20px; height: 650px; border-radius: 20px; background-color:#ebe2d9;"
+        <ion-col size="12" size-md="6" size-lg="3.5"
+          style="overflow: hidden; margin-top: 20px; border-radius: 20px; background-color:#ebe2d9;"
           class="mobile-col">
           <ion-card>
             <div class="ion-padding">
@@ -56,7 +56,7 @@
           <ion-button expand="block" id="openCreate" style="color: #ffffff;" @click="openCreate">Új esemény
             létrehozása</ion-button>
         </ion-col>
-        <ion-col style="margin-top: -40px; border-radius: 50px;">
+        <ion-col size="12" size-md="6" size-lg="8.5" style="margin-top: -40px; border-radius: 50px;" class="mobile-col">
           <ion-card class="section" style="border-radius: 20px; margin-top: 55px; background-color:#ebe2d9; height: 650px; overflow-y: scroll;">
             <div v-if="filteredData.length > 0" style="margin-top: 50px; background-color:#ebe2d9;">
               <ion-row style=" margin-top: -50px;">
@@ -339,8 +339,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { defineComponent, ref, defineProps } from 'vue';
-import { addOutline } from 'ionicons/icons';
-//import FileUpload from "@/components/FileUpload.vue";
+
 
 const props = defineProps<{
   user: UserData | null;
@@ -395,9 +394,6 @@ export interface EventData {
 
 export default defineComponent({
   name: 'EvenFilterProba',
-  /*components: {
-    FileUpload,
-  },*/
   props: {
     maxSize: {
       type: Number,
@@ -465,6 +461,7 @@ export default defineComponent({
     checkInputFields(): boolean {
       return !this.searchTitle && !this.searchCity && !this.searchAddress && !this.model && !this.date;
     },
+    
   },
   methods: {
     async fetchEventData() {
@@ -654,21 +651,19 @@ export default defineComponent({
     },
 
     async checkPairExists() {
-      try {
-        // Check if selectedRow and user are not null before accessing their 'id' properties
-        if (this.selectedRow && 'id' in this.selectedRow && this.user && 'id' in this.user) {
-          const response = await client.get(`/api/participants/check/${'id' in this.selectedRow}/${'id' in this.user}`);
-          this.pairExists = response.data.exists;
-        } else {
-          console.error("Either selectedRow or user is null or their 'id' properties are missing.");
-          // Handle the case when either selectedRow or user is null or their 'id' properties are missing
-          // Set pairExists to false or handle the error based on your logic
-          this.pairExists = false;
-        }
-      } catch (error) {
-        console.error("Error checking if user is already joined:", error);
-      }
-    },
+  try {
+    // Check if selectedRow and user are not null before accessing their 'id' properties
+    if (this.selectedRow && 'id' in this.selectedRow && this.user && 'id' in this.user) {
+      const response = await client.get(`/api/participants/check/${this.selectedRow.id}/${this.user.id}`);
+      this.pairExists = response.data.exists;
+    } else {
+      console.error("Either selectedRow or user is null or their 'id' properties are missing.");
+      this.pairExists = false;
+    }
+  } catch (error) {
+    console.error("Error checking if user is already joined:", error);
+  }
+},
 
     async openParticipantsCard() {
       this.participantsCardVisible = true;
@@ -1176,6 +1171,41 @@ p {
   scrollbar-color: #186049 #ebe2d9;
   border-radius: 10px;
 }*/
+@media (max-width: 768px) {
+ .mobile-col {
+    max-width: 100%;
+    margin-top: 10px;
+  }
+ .section {
+    height: 500px;
+    overflow-y: scroll;
+  }
+}
 
+@media (min-width: 769px) and (max-width: 1024px) {
+ .mobile-col {
+    max-width: 50%;
+    margin-top: 20px;
+  }
+  .mobile-grid{
+    overflow: hidden;
+  }
+ .section {
+    height: 600px;
+    overflow-y: scroll;
+  }
+}
+
+@media (min-width: 1025px) {
+ .mobile-col {
+    max-width: 30%;
+    margin-top: 30px;
+    overflow: hidden;
+  }
+ .section {
+    height: 700px;
+    overflow-y: scroll;
+  }
+}
 
 </style>

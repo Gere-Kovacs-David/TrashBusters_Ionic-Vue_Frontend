@@ -6,14 +6,11 @@
         <ion-grid style="margin-top: 75px;">
           
           <ion-row>
-            
-            <ion-col  style="height: 500px; width: 500px;">
-              
-             
+            <ion-col></ion-col>
+            <ion-col>
+              <SearchComponent/>
             </ion-col>
-            <ion-col size="8">
-
-            </ion-col>
+            <ion-col></ion-col>
             
       </ion-row>
       </ion-grid>
@@ -23,7 +20,7 @@
   
  <script setup lang="ts">
   import { IonPage, IonContent, IonRow } from '@ionic/vue';
-  //import EventFilter from "@/EventFilter.vue";
+  import SearchComponent from "../components/SearchComponent.vue";
   
   </script>
   
@@ -40,7 +37,6 @@
 
 /* Target ion-col directly */
 ion-col {
-  border: 1px solid #ccc;
   margin: 5px;
 }
 

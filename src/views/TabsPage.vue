@@ -1,4 +1,5 @@
 <template>
+  
   <ion-menu content-id="main-content" >
     
     <ion-header class="mobile-header">
@@ -7,7 +8,7 @@
       </ion-grid>
     </ion-header>
     <ion-content>
-    <ion-list style="background-color: white;">
+    <!--<ion-list style="background-color: white;">
         <ion-menu-toggle autoHide="false" color="#e4d5c7">
           <ion-item color="#e4d5c7" href="/tabs/calendar">
             <ion-icon slot="start" :icon="peopleOutline" color="#95877a"></ion-icon>
@@ -23,7 +24,7 @@
           </ion-item>
          
       </ion-menu-toggle>
-    </ion-list>
+    </ion-list>-->
       
     </ion-content>
     
@@ -224,16 +225,14 @@ color: white;
   height: 80px;
 }
 ion-content {
-    --ion-background-color: #ffffff; /* Change the background color */
+    --ion-background-color: #ffffff;
 }
 
 ion-item {
     --ion-background:#ffffff ;
     --color: #95877a;
 
-    /*--border-color: #fff;
-    --border-style: dashed;
-    --border-width: 2px;*/
+
 
     --border-radius: 0px 20px 0px 20px;
 
@@ -244,44 +243,3 @@ ion-item {
     --detail-icon-font-size: 20px;
   }
 </style>
-
- <!--<ion-col  size="0.9" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding" >
-                <ion-button href="/tabs/info">
-                  <ion-icon :icon="bookOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>-->
-              <!--<label style="margin: 25px; font-size: 9px" >Tananyag</label>-->
-            <!--</ion-col>
-            <ion-col  size="0.9" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/events">
-                  <ion-icon :icon="megaphoneOutline" size="1" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>-->
-              <!--<label style="margin: 25px; font-size: 9px" >Tananyag</label>-->
-            <!--</ion-col>
-            <ion-col size="1" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/feed">
-                  <ion-icon :icon="homeOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>-->
-              <!--<label style="margin: 30px; font-size: 9px">Tananyag</label>-->
-            <!--</ion-col>
-            <ion-col  size="0.9" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding">
-                <ion-button href="/tabs/map" >
-                  <ion-icon :icon="mapOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>-->
-              <!--<label style="margin: 25px; font-size: 9px" >Tananyag</label>-->
-            <!--</ion-col>
-            <ion-col  size="0.8" class="desktop-header">
-              <ion-buttons class="ion-horizontal-padding" >
-                <ion-button href="/tabs/calendar">
-                  <ion-icon :icon="calendarOutline" class="header-icon"/>
-                </ion-button>
-              </ion-buttons>-->
-              <!--<label style="margin: 25px; font-size: 9px" >Naptár</label>-->
-            <!--</ion-col>-->
