@@ -183,6 +183,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { defineComponent, ref, defineProps } from 'vue';
 import { addOutline } from 'ionicons/icons';
+import { client } from '../url';
 //import FileUpload from "@/components/FileUpload.vue";
 
 const props = defineProps<{
@@ -206,9 +207,6 @@ const closeModal = () => {
   modalVisible.value = false;
 };
 
-const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
-});
 
 interface UserData {
   id: string;

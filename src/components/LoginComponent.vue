@@ -77,12 +77,9 @@
     import { defineComponent, ref} from 'vue';
     import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders} from 'axios';
     import useAuth from "@/composables/useAuth";
-
+    import { client } from '../url';
 
      
-    const client = axios.create({
-    baseURL: 'http://127.0.0.1:8000', // Update baseURL to match your backend server URL
-    });
 
     export default defineComponent({
     name: 'LoginComponent',

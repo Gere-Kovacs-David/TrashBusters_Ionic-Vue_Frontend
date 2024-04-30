@@ -217,7 +217,7 @@
           <ion-content>
             <form @submit.prevent="createEvent">
               <ion-grid style="width: 100%; margin: auto">
-                <!--<ion-row>
+                <ion-row>
                   <ion-col>
                     <div class="file-upload">
                       <div class="file-upload__area">
@@ -248,13 +248,6 @@
                         </div>
                       </div>
                     </div>
-                  </ion-col>
-                </ion-row>-->
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <!--<ion-input v-model="eventPicture" @ionInput="eventPicture = $event.target.value;" type="file" name="" id="" accept="image/*"/>-->
-                    </ion-item>
                   </ion-col>
                 </ion-row>
                 <ion-row>
@@ -339,7 +332,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { defineComponent, ref, defineProps } from 'vue';
-
+import { client } from '../url';
 
 const props = defineProps<{
   user: UserData | null;
@@ -362,9 +355,6 @@ const closeModal = () => {
   modalVisible.value = false;
 };
 
-const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
-});
 
 interface UserData {
   id: string;

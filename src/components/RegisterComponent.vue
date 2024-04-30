@@ -94,10 +94,8 @@
   import { defineComponent } from 'vue';
   import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
   //import useAuth from "src/composables/useAuth";
-
-  const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000', // Update baseURL to match your backend server URL
-  });
+  import { client } from '../url';
+ 
 
   export default defineComponent({
   data() {

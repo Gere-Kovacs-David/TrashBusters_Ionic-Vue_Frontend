@@ -49,6 +49,7 @@
   <script lang="ts">
   import axios, { AxiosRequestConfig, AxiosResponse} from 'axios';
   import { defineComponent } from "vue";
+  import { client } from '../url';
 
 interface User {
   id: number;
@@ -69,9 +70,6 @@ export default defineComponent({
   methods: {
     async searchUser() {
       try {
-        const client = axios.create({
-        baseURL: 'http://127.0.0.1:8000',
-        });
         const config: AxiosRequestConfig = {
             headers: {
             'Accept': 'application/json',

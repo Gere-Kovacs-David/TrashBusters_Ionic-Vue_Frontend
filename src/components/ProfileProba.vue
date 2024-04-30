@@ -307,6 +307,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { defineComponent, ref, defineProps } from 'vue';
 import useAuth from "@/composables/useAuth";
+import { client } from '../url';
 
 const props = defineProps<{
   user: UserData | null;
@@ -327,9 +328,6 @@ const closeModal = () => {
   modalVisible.value = false;
 };
 
-const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
-});
 
 interface UserData {
   id: string;
