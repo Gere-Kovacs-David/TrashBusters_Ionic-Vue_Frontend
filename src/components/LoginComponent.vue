@@ -108,19 +108,19 @@
             email: this.email,
             password: this.password,
             };
-            console.log('Request Data:', data);
+            //console.log('Request Data:', data);
             const response: AxiosResponse = await client.post('/api/auth/login', data, config);
 
             if(response.data.user.isVerified){
-              console.log(response.status);
-              console.log(response.data);
-              console.log(`${response.data.user}`);
+              //console.log(response.status);
+              //console.log(response.data);
+              //console.log(`${response.data.user}`);
               document.cookie = `token=${response.data.accessToken}; path=/;`;
               const userJson = JSON.stringify(response.data.user);
               document.cookie = `user=${userJson}; path=/;`;
               useAuth.isLoggedIn = ref(true);
               this.$router.push('/tabs/feed');
-              console.log("Sikeres bejelentkezés");
+              //console.log("Sikeres bejelentkezés");
             }
             else{
               alert("Még nem erősítette meg a felhasználóját!");
@@ -129,7 +129,7 @@
             
             
         } catch (error) {
-            console.error(error);
+            //console.error(error);
             this.error = 'Téves email vagy jelszó';
             alert(this.error);
         }
@@ -146,10 +146,10 @@
             const data = {
             email: this.email,
             };
-            console.log('Request Data:', data);
+            //console.log('Request Data:', data);
             const response: AxiosResponse = await client.post("/api/reset-password", data, config);
-            console.log(response.status);
-            console.log(response.data);
+            //console.log(response.status);
+            //console.log(response.data);
 
         if (response.status === 200) {
           this.email = "";
@@ -251,4 +251,4 @@
     --color: #ffffff;
     float: right;
   }
-  </style>@/router/useAuth@/composables/useAuth
+  </style>

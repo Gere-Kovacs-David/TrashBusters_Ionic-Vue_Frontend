@@ -2,6 +2,7 @@
   "name": "photo-gallery-vue",
   "version": "1.0.0",
   "private": true,
+  "description": "Build a social media app that runs on iOS, Android, and the web - with just one codebase.",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -24,13 +25,15 @@
     "@ionic/pwa-elements": "~3.1.1",
     "@ionic/vue": "^6.0.0",
     "@ionic/vue-router": "^6.0.0",
+    "@schedule-x/calendar": "^1.25.0",
     "@schedule-x/scroll-controller": "^1.27.0",
-    "@schedule-x/theme-default": "^1.25.0",
+    "@schedule-x/theme-default": "^1.35.0",
     "@schedule-x/vue": "^1.21.0",
     "axios": "^1.6.8",
     "core-js": "^3.6.5",
     "ionicons": "^6.0.3",
     "js-cookie": "^3.0.5",
+    "register-service-worker": "^1.7.2",
     "vite": "^5.2.8",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
@@ -46,6 +49,7 @@
     "@vue/cli-plugin-babel": "~5.0.0-rc.1",
     "@vue/cli-plugin-e2e-cypress": "~5.0.0-rc.1",
     "@vue/cli-plugin-eslint": "~5.0.0-rc.1",
+    "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0-rc.1",
     "@vue/cli-plugin-typescript": "~5.0.0-rc.1",
     "@vue/cli-plugin-unit-jest": "~5.0.0-rc.1",
@@ -64,6 +68,5 @@
     "ts-jest": "^27.0.7",
     "typescript": "^4.3.5"
   },
-  "prettier": "@ionic/prettier-config",
-  "description": "Build a photo gallery app that runs on iOS, Android, and the web - with just one codebase."
+  "prettier": "@ionic/prettier-config"
 }

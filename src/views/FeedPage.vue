@@ -49,6 +49,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { defineComponent } from "vue";
+import { client } from '../url';
 
 export default defineComponent({
   name: "IndexPage",
@@ -106,9 +107,6 @@ export default defineComponent({
   },
   methods: {
     async getEventWithMostParticipants() {
-      const client = axios.create({
-        baseURL: 'http://127.0.0.1:8000',
-      });
       try {
         const response = await client.get<{ data: any }>("/api/event/most-participants");
         if (response.data) {
@@ -148,9 +146,6 @@ export default defineComponent({
       }
     },
     async getLatestEvent() {
-      const client = axios.create({
-        baseURL: 'http://127.0.0.1:8000',
-      });
       try {
         const response = await client.get("/api/event/latest");
         if (response.data) {
@@ -188,9 +183,7 @@ export default defineComponent({
       }
     },
     async getClosestEvent() {
-      const client = axios.create({
-        baseURL: 'http://127.0.0.1:8000',
-      });
+
       try {
         const response = await client.get("/api/event/closest");
         if (response.data) {

@@ -456,7 +456,7 @@ export default defineComponent({
         this.filteredData = response.data;
       }
       } catch (error) {
-        console.error("Error fetching event data:", error);
+        //console.error("Error fetching event data:", error);
       }
     },
     async fetchParticipatedData() {
@@ -481,7 +481,7 @@ export default defineComponent({
         this.filteredData = response.data;
       }
       } catch (error) {
-        console.error("Error fetching event data:", error);
+        //console.error("Error fetching event data:", error);
       }
     },
     
@@ -541,14 +541,14 @@ export default defineComponent({
 
           this.participants = response.data.users; // Moved inside the try block
         } else {
-          console.log("this.selectedRow is null or undefined");
+          //console.log("this.selectedRow is null or undefined");
         }
 
         alert("Sikeresen csatlakozott az eseményhez!");
         window.location.reload();
         this.closeCard();
       } catch (error) {
-        console.error("Error joining event:", error);
+        //console.error("Error joining event:", error);
         alert("Hiba a csatlakozás során!");
         this.closeCard();
       }
@@ -567,7 +567,7 @@ export default defineComponent({
 
         }
       } catch (error) {
-        console.error("Error fetching creator name:", error);
+        //console.error("Error fetching creator name:", error);
       }
     },
 
@@ -582,7 +582,7 @@ export default defineComponent({
           this.dumpName = null;
         }
       } catch (error) {
-        console.error("Error fetching dump name:", error);
+        //console.error("Error fetching dump name:", error);
         this.dumpName = null; // Set dumpName to null in case of error
       }
     },
@@ -594,20 +594,20 @@ export default defineComponent({
           const response = await client.get(`/api/participants/check/${'id' in this.selectedRow}/${'id' in this.user}`);
           this.pairExists = response.data.exists;
         } else {
-          console.error("Either selectedRow or user is null or their 'id' properties are missing.");
+          //console.error("Either selectedRow or user is null or their 'id' properties are missing.");
           // Handle the case when either selectedRow or user is null or their 'id' properties are missing
           // Set pairExists to false or handle the error based on your logic
           this.pairExists = false;
         }
       } catch (error) {
-        console.error("Error checking if user is already joined:", error);
+        //console.error("Error checking if user is already joined:", error);
       }
     },
 
     async openParticipantsCard() {
       this.participantsCardVisible = true;
       if (!this.selectedRow) {
-        console.error("selectedRow is null");
+        //console.error("selectedRow is null");
         return;
       }
 
@@ -620,16 +620,16 @@ export default defineComponent({
           const response = await client.get(`/api/participants/event/${this.selectedRow.id}`);
           this.participants = response.data.users;
         } else {
-          console.error("selectedRow is null or does not have an 'id' property");
+          //console.error("selectedRow is null or does not have an 'id' property");
         }
       } catch (error) {
-        console.error("Error fetching participants:", error);
+        //console.error("Error fetching participants:", error);
       }
     },
 
     async getParticipantsByEventId() {
       if (!this.selectedRow) {
-        console.error("selectedRow is null");
+        //console.error("selectedRow is null");
         return;
       }
 
@@ -640,7 +640,7 @@ export default defineComponent({
         const response = await client.get(`/api/participants/event/${eventId}`);
         this.participants = response.data;
       } catch (error) {
-        console.error("Error fetching participants:", error);
+        //console.error("Error fetching participants:", error);
       }
     },
 
@@ -669,8 +669,8 @@ export default defineComponent({
           const fileName: string = file.name.split(".").shift() || '';
           // Check if file is an image
           const isImage: boolean = ["jpg", "jpeg", "png"].includes(fileExtention);
-          // Print to console
-          console.log(fileSize, fileExtention, fileName, isImage);
+          // Print to //console
+          //console.log(fileSize, fileExtention, fileName, isImage);
           // Load the FileReader API
           const reader = new FileReader();
           reader.addEventListener(
@@ -694,23 +694,23 @@ export default defineComponent({
           );
           reader.readAsDataURL(file);
         } else {
-          console.log("Invalid file");
+          //console.log("Invalid file");
         }
       }
     },
 
     isFileSizeValid(fileSize: number) {
       if (fileSize <= this.maxSize) {
-        console.log("File size is valid");
+        //console.log("File size is valid");
       } else {
-        console.log("File size should be less than MB");
+        //console.log("File size should be less than MB");
       }
     },
     isFileTypeValid(fileExtention: string) {
       if (this.accept.split(",").includes(fileExtention)) {
-        console.log("File type is valid");
+        //console.log("File type is valid");
       } else {
-        console.log("File type should be");
+        //console.log("File type should be");
       }
     },
     isFileValid(file: File) {
@@ -753,7 +753,9 @@ export default defineComponent({
       Cookies.remove("token", { path: "/" });
       Cookies.remove("user", { path: "/" });
       this.user = null;
-      this.$router.push("/login");
+      
+      this.$router.push("/landing");
+      
     },
     async logoutProfile() {
       this.showLogouteConfirmation();
@@ -769,7 +771,7 @@ export default defineComponent({
 
     async showDeleteConfirmation(): Promise<void> {
   if (!this.user) {
-    console.error("User object is null or undefined.");
+    //console.error("User object is null or undefined.");
     return;
   }
 
@@ -801,7 +803,7 @@ export default defineComponent({
       })
     );
   } catch (error: any) {
-    console.error("Error deleting profile:", error);
+    //console.error("Error deleting profile:", error);
   }
   await axios.delete(`/api/users/${this.user?.id}`);
   alert("Sikeresen törölte a profilját!");

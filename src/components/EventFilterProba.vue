@@ -474,7 +474,7 @@ export default defineComponent({
         const response: AxiosResponse<EventData[]> = await client.get('/api/events', data);
         this.filteredData = response.data;
       } catch (error) {
-        console.error("Error fetching event data:", error);
+        //console.error("Error fetching event data:", error);
       }
     },
     async searchData() {
@@ -511,7 +511,7 @@ export default defineComponent({
         });
 
       } catch (error) {
-        console.error("Hiba a keresés során:", error);
+        //console.error("Hiba a keresés során:", error);
       }
     },
     async filterReset() {
@@ -526,7 +526,7 @@ export default defineComponent({
         // Call searchData method to update filteredData
         await this.searchData();
       } catch (error) {
-        console.error("Error resetting filters:", error);
+        //console.error("Error resetting filters:", error);
       }
     },
 
@@ -594,14 +594,14 @@ export default defineComponent({
 
           this.participants = response.data.users; // Moved inside the try block
         } else {
-          console.log("this.selectedRow is null or undefined");
+          //console.log("this.selectedRow is null or undefined");
         }
 
         alert("Sikeresen csatlakozott az eseményhez!");
         window.location.reload();
         this.closeCard();
       } catch (error) {
-        console.error("Error joining event:", error);
+        //console.error("Error joining event:", error);
         alert("Hiba a csatlakozás során!");
         this.closeCard();
       }
@@ -620,7 +620,7 @@ export default defineComponent({
 
         }
       } catch (error) {
-        console.error("Error fetching creator name:", error);
+        //console.error("Error fetching creator name:", error);
       }
     },
 
@@ -635,7 +635,7 @@ export default defineComponent({
           this.dumpName = null;
         }
       } catch (error) {
-        console.error("Error fetching dump name:", error);
+        //console.error("Error fetching dump name:", error);
         this.dumpName = null; // Set dumpName to null in case of error
       }
     },
@@ -647,18 +647,18 @@ export default defineComponent({
       const response = await client.get(`/api/participants/check/${this.selectedRow.id}/${this.user.id}`);
       this.pairExists = response.data.exists;
     } else {
-      console.error("Either selectedRow or user is null or their 'id' properties are missing.");
+      //console.error("Either selectedRow or user is null or their 'id' properties are missing.");
       this.pairExists = false;
     }
   } catch (error) {
-    console.error("Error checking if user is already joined:", error);
+    //console.error("Error checking if user is already joined:", error);
   }
 },
 
     async openParticipantsCard() {
       this.participantsCardVisible = true;
       if (!this.selectedRow) {
-        console.error("selectedRow is null");
+        //console.error("selectedRow is null");
         return;
       }
 
@@ -671,16 +671,16 @@ export default defineComponent({
           const response = await client.get(`/api/participants/event/${this.selectedRow.id}`);
           this.participants = response.data.users;
         } else {
-          console.error("selectedRow is null or does not have an 'id' property");
+          //console.error("selectedRow is null or does not have an 'id' property");
         }
       } catch (error) {
-        console.error("Error fetching participants:", error);
+        //console.error("Error fetching participants:", error);
       }
     },
 
     async getParticipantsByEventId() {
       if (!this.selectedRow) {
-        console.error("selectedRow is null");
+        //console.error("selectedRow is null");
         return;
       }
 
@@ -691,7 +691,7 @@ export default defineComponent({
         const response = await client.get(`/api/participants/event/${eventId}`);
         this.participants = response.data;
       } catch (error) {
-        console.error("Error fetching participants:", error);
+        //console.error("Error fetching participants:", error);
       }
     },
 
@@ -740,10 +740,10 @@ export default defineComponent({
         }
 
         const response: AxiosResponse = await client.post("/api/events", formData, config);
-        console.log("Event creation successful");
+        //console.log("Event creation successful");
         alert("Event created successfully!");
       } catch (error) {
-        console.error("Event creation failed:", error);
+        //console.error("Event creation failed:", error);
         alert("Event creation failed. Please try again.");
       }
     },
@@ -764,8 +764,8 @@ export default defineComponent({
           const fileName: string = file.name.split(".").shift() || '';
           // Check if file is an image
           const isImage: boolean = ["jpg", "jpeg", "png"].includes(fileExtention);
-          // Print to console
-          console.log(fileSize, fileExtention, fileName, isImage);
+          // Print to //console
+          //console.log(fileSize, fileExtention, fileName, isImage);
           // Load the FileReader API
           const reader = new FileReader();
           reader.addEventListener(
@@ -789,22 +789,22 @@ export default defineComponent({
           );
           reader.readAsDataURL(file);
         } else {
-          console.log("Invalid file");
+          //console.log("Invalid file");
         }
       }
     },
     isFileSizeValid(fileSize: number) {
       if (fileSize <= this.maxSize) {
-        console.log("File size is valid");
+        //console.log("File size is valid");
       } else {
-        console.log("File size should be less than MB");
+        //console.log("File size should be less than MB");
       }
     },
     isFileTypeValid(fileExtention: string) {
       if (this.accept.split(",").includes(fileExtention)) {
-        console.log("File type is valid");
+        //console.log("File type is valid");
       } else {
-        console.log("File type should be");
+        //console.log("File type should be");
       }
     },
     isFileValid(file: File) {

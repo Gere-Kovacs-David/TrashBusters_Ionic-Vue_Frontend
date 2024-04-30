@@ -129,17 +129,17 @@
             city: this.city,
             password: this.password,
             };
-            console.log('Request Data:', data);
+            //console.log('Request Data:', data);
             const response: AxiosResponse = await client.post('/api/auth/register', data, config);
 
             //useAuth.isLoggedIn.value == true;
 
-            console.log(response.status);
-            console.log(response.data);
+            //console.log(response.status);
+            //console.log(response.data);
             // Handle successful login here, e.g., redirect to another page
             this.$router.push('/landing');
         } catch (err) {
-            console.error(err);
+            //console.error(err);
             this.error = 'Invalid email address or password!';
             // Handle login error here
         }

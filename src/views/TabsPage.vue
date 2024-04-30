@@ -131,11 +131,10 @@
 </template>
 
 <script setup lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonItem } from '@ionic/vue';
-import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, personOutline, menuOutline, trashBinOutline, peopleOutline } from 'ionicons/icons';
+import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet} from '@ionic/vue';
+import { bookOutline, calendarOutline, homeOutline, mapOutline, megaphoneOutline, personOutline, menuOutline} from 'ionicons/icons';
 import { ref } from 'vue';
 import  router  from '@/router';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import useAuth from "@/composables/useAuth";
 import { defineComponent } from "vue";
 import Cookies from "js-cookie";
